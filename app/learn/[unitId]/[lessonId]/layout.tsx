@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${unit.id} · ${lesson.title}`,
     description: lesson.objective,
     path: `/learn/${unitId}/${lessonId}`,
+    noIndex: lesson.id !== "M2-L1" && lesson.id !== "RW1-L1",
   })
 }
 

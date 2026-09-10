@@ -30,15 +30,15 @@ Copy is written as a skilled mentor: calm, specific, growth-oriented. Process is
 7. Keep an error notebook (knowledge / interpretation / method / calculation / timing) and retest on a fresh item.
 8. Sit a timed mini-set and a **two-stage rehearsal mock** (RW two modules, 10-minute break, Math two modules, frozen form version, independent routing). Modules cannot be edited after submit.
 9. See Progress with **separate** coverage, independent accuracy, retention, and timed-performance evidence.
-10. Use Help for accessibility, outbound [Bluebook practice](https://bluebook.collegeboard.org/students/practice) plus recorded self-reported results, a test-day checklist, and careful, dated National Merit information (NMSQT track only).
+10. Use Help for accessibility, outbound College Board digital practice, and a test-day checklist. SAT mentoring later: https://anannt.ae/sat-coaching-dubai.
 
 Account controls include a role toggle for a lightweight **Mentor** exception queue and a **Family** summary. There is no login and no database; state is stored in `localStorage` on this device.
 
 ## Honest limits
 
-- Not College Board exam delivery, registration, or Bluebook itself.
+- Not College Board exam delivery or registration.
 - Does not convert raw percent correct into 320–1520 or invent percentiles.
-- Does not guarantee scores, scholarships, or National Merit eligibility.
+- Does not promise scores or scholarships.
 - Rehearsal mocks are **shortened** two-stage forms so routing can be practised without a 134-minute sitting. Official module lengths (27 RW / 32 min, 22 Math / 35 min) are cited in-product.
 - Routing uses an Anannt practice rule, never advertised as College Board’s proprietary threshold.
 - Academic editor CMS is out of scope except a quarantine / flag control on items.
@@ -55,15 +55,15 @@ npm install
 npm run dev
 ```
 
-The dev server binds to `0.0.0.0:3847`.
+The dev server binds to `0.0.0.0:43142` with `basePath` `/psat`. Production URLs are `https://study.anannt.ae/psat`.
 
 ```bash
 npm run build
 npm start
 ```
 
-Open `http://127.0.0.1:3847`.
+Open `http://127.0.0.1:43142/psat`.
 
 ## Persistence
 
-Student profile, attempts, mastery, plans, mocks, and Bluebook records live under the `anannt-psat-v1` key in local storage. Reset from Account → “Reset this device’s demo data”.
+Student profile, attempts, mastery, plans, and mocks live under the `anannt-psat-v1` key in local storage. Reset from Account → “Reset this device’s demo data”.

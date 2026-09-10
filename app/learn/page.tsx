@@ -8,8 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { emptyMastery, ensureMasteryMap } from "@/lib/mastery"
 import { MentorNote } from "@/components/mentor-note"
-import { BRAND } from "@/lib/brand"
 import { LESSONS } from "@/data/lessons"
+import { isPublicLesson, studyStartUrl, waitlistUrl } from "@/lib/gate"
 
 export default function LearnPage() {
   const { state, hydrated } = useStudent()
@@ -23,15 +23,14 @@ export default function LearnPage() {
       <div>
         <h1 className="text-3xl font-semibold">Curriculum map</h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">
-          {BRAND.name} sequences Reading and Writing RW0–RW12 and Math M0–M14. You may open any lesson. Complete lessons
-          carry the full method (objective through takeaway). Walkable shells are labelled so untested skills stay
-          unknown — not dressed up as mastered.
+          Two public lessons are open: M2 slope in context and RW1 some versus all. Other complete
+          lessons sit behind the study gate. Walkable shells are unpublished — ask to be told when
+          they are ready. This path does not sell AP.
         </p>
       </div>
       <MentorNote>
-        If you are new to the path, start with a complete lesson: RW1 (some versus all), RW8 (sentence boundaries), or M2
-        (slope as rate versus start). Challenge checks can skip a recommendation; a failed check yields a short repair,
-        not a full-course restart.
+        If you are new, start with M2 (slope as rate versus start) or RW1 (some versus all). Later
+        lessons wait behind the gate. Shells are unpublished, not a hidden full course.
       </MentorNote>
       <Section title="Reading and Writing" units={rw} mastery={mastery} />
       <Section title="Math" units={math} mastery={mastery} />
@@ -55,8 +54,13 @@ function Section({
         {units.map((u) => {
           const rec = mastery[`${u.id}-S1`] ?? emptyMastery(`${u.id}-S1`)
           const lesson = LESSONS.find((l) => l.unitId === u.id)
-          return (
-            <Link key={u.id} href={`/learn/${u.id}/${u.lessonIds[0]}`}>
+          const publicLesson = lesson && isPublicLesson(lesson.id)
+          const href = publicLesson
+            ? `/learn/${u.id}/${u.lessonIds[0]}`
+            : lesson?.complete
+              ? studyStartUrl(u.id)
+              : waitlistUrl(u.id)
+          const CardInner = (
               <Card className="h-full transition-colors hover:bg-muted/40">
                 <CardHeader className="flex flex-row items-start justify-between gap-2">
                   <CardTitle className="text-base">
@@ -67,14 +71,28 @@ function Section({
                 <CardContent className="space-y-2 text-sm text-muted-foreground">
                   <p>{u.coverage}</p>
                   <div className="flex flex-wrap gap-1">
-                    {lesson?.complete ? <Badge>Complete lesson</Badge> : <Badge variant="secondary">Walkable shell</Badge>}
+                    {publicLesson ? (
+                      <Badge>Public lesson</Badge>
+                    ) : lesson?.complete ? (
+                      <Badge>After two lessons</Badge>
+                    ) : (
+                      <Badge variant="secondary">Unpublished</Badge>
+                    )}
                     {u.prerequisites.length > 0 && (
                       <Badge variant="outline">After {u.prerequisites.join(", ")}</Badge>
                     )}
                   </div>
                 </CardContent>
               </Card>
+          )
+          return publicLesson ? (
+            <Link key={u.id} href={href}>
+              {CardInner}
             </Link>
+          ) : (
+            <a key={u.id} href={href} className="block">
+              {CardInner}
+            </a>
           )
         })}
       </div>

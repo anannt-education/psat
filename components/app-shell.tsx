@@ -314,7 +314,7 @@ function AccountMenu({ compact }: { compact?: boolean }) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="/help">Help and Bluebook</Link>
+          <Link href="/help">Help</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/method">How Anannt Education teaches</Link>

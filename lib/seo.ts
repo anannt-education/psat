@@ -1,13 +1,16 @@
 import type { Metadata } from "next"
 import { BRAND } from "@/lib/brand"
-import { LESSONS } from "@/data/lessons"
 import { UNITS } from "@/lib/curriculum"
+import { BASE_PATH, STUDY_ORIGIN } from "@/lib/gate"
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3847").replace(/\/$/, "")
+export const SITE_URL = (process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || STUDY_ORIGIN).replace(/\/$/, "")
+
+export { BASE_PATH, STUDY_ORIGIN }
 
 export function absoluteUrl(path = "/") {
   if (path.startsWith("http")) return path
-  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`
+  const p = !path || path === "/" ? "" : path.startsWith("/") ? path : `/${path}`
+  return `${SITE_URL}${BASE_PATH}${p}`
 }
 
 export function pageMetadata({
@@ -48,91 +51,51 @@ export function pageMetadata({
 export const PUBLIC_PATHS: { path: string; title: string; description: string }[] = [
   {
     path: "/",
-    title: "PSAT/NMSQT and PSAT 10 path",
-    description: BRAND.description,
+    title: "PSAT/NMSQT path · SAT preview",
+    description:
+      "A short SAT feeder: slope-in-context and some-versus-all, free, no account. Dual College Board disclaimer. Digital SAT mentoring later—never an AP upsell.",
   },
   {
     path: "/method",
-    title: "How Anannt Education teaches PSAT",
+    title: "How this PSAT desk teaches",
     description:
-      "Anannt Education’s method for PSAT/NMSQT and PSAT 10: orient, diagnose, place, plan, learn, apply, retain, perform. No score guarantees and no College Board affiliation.",
+      "Orient, two public lessons, then a gate. SAT habits only. Anannt is not affiliated with the College Board and does not convert practice into an official score.",
   },
   {
     path: "/for-families",
     title: "PSAT prep for families",
     description:
-      "How families can support Anannt Education’s PSAT/NMSQT and PSAT 10 path: protect study days, ask for one worked example, and never treat practice percent as an official score.",
-  },
-  {
-    path: "/onboard",
-    title: "Set up your PSAT path",
-    description:
-      "Choose PSAT/NMSQT or PSAT 10, grade, weekly minutes, and what you want help with. Anannt Education stores this setup on this device only.",
-  },
-  {
-    path: "/orient",
-    title: "How the PSAT suite and this course work",
-    description:
-      "Official PSAT/NMSQT and PSAT 10 structure, two-stage modules, and Anannt Education’s ten-step learning journey.",
-  },
-  {
-    path: "/diagnostic",
-    title: "PSAT domain screening",
-    description:
-      "A 28-item Anannt Education diagnostic across eight official PSAT domains. Placement hints with uncertainty — not an official 320–1520 score.",
-  },
-  {
-    path: "/today",
-    title: "Today’s PSAT plan",
-    description: "A dated Anannt Education study plan for PSAT/NMSQT or PSAT 10, with a reason and duration for each task.",
-  },
-  {
-    path: "/learn",
-    title: "PSAT curriculum map",
-    description:
-      "Anannt Education’s sequential PSAT path: Reading and Writing RW0–RW12 and Math M0–M14, including slope in context and sentence boundaries.",
-  },
-  {
-    path: "/practice",
-    title: "PSAT practice modes",
-    description:
-      "Guided hints, independent quizzes, mixed review, timed mini-sets, and section modules written by Anannt Education for the digital PSAT suite.",
-  },
-  {
-    path: "/mistakes",
-    title: "Review PSAT mistakes",
-    description:
-      "Anannt Education’s error notebook: knowledge, interpretation, method, calculation, and timing — then a fresh analogous item.",
-  },
-  {
-    path: "/mocks",
-    title: "PSAT two-stage mock rehearsal",
-    description:
-      "Shortened two-stage PSAT/NMSQT rehearsal with an Anannt routing rule. Raw accuracy and pacing — never a converted official score.",
-  },
-  {
-    path: "/progress",
-    title: "PSAT learning evidence",
-    description:
-      "Coverage, independent accuracy, retention, and timed performance stored separately by Anannt Education. No opaque composite score.",
+      "Protect study days. Ask for one worked example. Do not treat a practice percent as an official score. SAT mentoring lives on anannt.ae/sat-coaching-dubai.",
   },
   {
     path: "/help",
-    title: "Help, Bluebook, and test day",
+    title: "PSAT FAQ and test-day notes",
     description:
-      "Accessibility, outbound College Board Bluebook practice, test-day checklist, and careful National Merit context from Anannt Education.",
+      "Accessibility and practical test-day notes for PSAT 10 and PSAT/NMSQT. Official digital practice is outbound. SAT mentoring, not AP, if you want a human later.",
   },
   {
-    path: "/parent",
-    title: "Family summary",
+    path: "/learn",
+    title: "PSAT map · two lessons open",
     description:
-      "Effort and learning evidence for the student on this device. Anannt Education does not stream failure alerts to families.",
+      "Slope in context and some-versus-all are public. Other units are unpublished shells or gated. This path does not sell AP and is not a complete SAT course.",
   },
   {
-    path: "/mentor",
-    title: "Mentor exception queue",
+    path: "/learn/M2/M2-L1",
+    title: "Slope in context",
     description:
-      "Anannt Education’s mentor view: inactivity, repeated errors, and timed-versus-untimed gaps — with inspectable reasons.",
+      "Lesson 1, free and no account: in C = 12 + 3d, 12 is the start and 3 is the rate. Swapping slope and intercept is the featured error.",
+  },
+  {
+    path: "/learn/RW1/RW1-L1",
+    title: "Some versus all",
+    description:
+      "Lesson 2, free and no account: keep some, may, and not studied. Inflating a cautious finding is the attractive wrong answer on this SAT feeder.",
+  },
+  {
+    path: "/diagnostic",
+    title: "PSAT diagnostic start",
+    description:
+      "Start a domain screening with no account. After you submit, we ask for email and a required parent WhatsApp. Not an official 320–1520 score.",
   },
 ]
 
@@ -143,25 +106,19 @@ export function metadataForPath(path: string): Metadata {
       title: BRAND.product,
       description: BRAND.description,
       path,
+      noIndex: true,
     })
   }
   return pageMetadata(row)
 }
 
 export function sitemapEntries() {
-  const staticUrls = PUBLIC_PATHS.map((p) => ({
+  return PUBLIC_PATHS.map((p) => ({
     url: absoluteUrl(p.path),
     lastModified: new Date(),
     changeFrequency: p.path === "/" || p.path === "/learn" ? ("weekly" as const) : ("monthly" as const),
     priority: p.path === "/" ? 1 : p.path === "/learn" || p.path === "/method" ? 0.8 : 0.6,
   }))
-  const lessons = LESSONS.map((lesson) => ({
-    url: absoluteUrl(`/learn/${lesson.unitId}/${lesson.id}`),
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: lesson.complete ? 0.7 : 0.45,
-  }))
-  return [...staticUrls, ...lessons]
 }
 
 export function organizationJsonLd() {
@@ -174,6 +131,14 @@ export function organizationJsonLd() {
     url: SITE_URL,
     slogan: BRAND.tagline,
     knowsAbout: ["PSAT/NMSQT", "PSAT 10", "SAT Suite", "Reading and Writing", "High school mathematics"],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Office 105, Bank Street Building, Burjuman Metro Exit 2",
+      addressLocality: "Dubai",
+      addressCountry: "AE",
+    },
+    telephone: "+971 58585 3551",
+    email: "wecare@anannt.ae",
   }
 }
 

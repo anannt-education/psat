@@ -5,7 +5,7 @@ import { courseJsonLd, organizationJsonLd, pageMetadata } from "@/lib/seo"
 import { BRAND } from "@/lib/brand"
 
 export const metadata: Metadata = pageMetadata({
-  title: "PSAT/NMSQT and PSAT 10 path",
+  title: "PSAT/NMSQT path · SAT preview",
   description: BRAND.description,
   path: "/",
 })

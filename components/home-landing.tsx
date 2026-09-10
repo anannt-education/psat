@@ -9,12 +9,12 @@ export function HomeLanding() {
       <section className="space-y-5">
         <p className="text-sm font-medium tracking-wide text-muted-foreground uppercase">{BRAND.name}</p>
         <h1 className="max-w-3xl font-heading text-4xl font-semibold tracking-tight md:text-5xl">
-          PSAT/NMSQT and PSAT 10 prep with a mentor in the work, not a slogan on the banner.
+          PSAT as SAT practice — two lessons open, no account.
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          {BRAND.tagline} Anannt Education writes the lessons, the diagnostic, and the mock routing rule. We teach the
-          digital suite — Reading and Writing and Math — without claiming College Board affiliation or inventing a
-          320–1520 from a practice percent.
+          Slope in context and some-versus-all. This is a SAT feeder, not an AP course. After two
+          honest lessons we ask for email and a parent WhatsApp. If you want a human later, that
+          path is Digital SAT mentoring — never an AP upsell.
         </p>
         <ContinueToPath />
       </section>
@@ -25,18 +25,18 @@ export function HomeLanding() {
         </h2>
         <IntentCard
           title="PSAT/NMSQT"
-          body="October sitting, 320–1520 official scale cited in Help, National Merit context only as dated official links — never an eligibility promise."
-          href="/onboard"
+          body="October sitting. Official scales are cited as facts, not as a score we can invent from practice."
+          href="/learn/M2/M2-L1"
         />
         <IntentCard
           title="PSAT 10"
-          body="Shared instructional core with a distinct track. Same mastery rules; no National Merit counselling on this path."
-          href="/onboard"
+          body="Shared instructional core with a distinct track. Same two public lessons. SAT habits only."
+          href="/learn/RW1/RW1-L1"
         />
         <IntentCard
-          title="Diagnostic and adaptive mock"
-          body="A 28-item domain screening, then a shortened two-stage rehearsal that freezes an Anannt routing rule — not College Board’s threshold."
-          href="/method"
+          title="Digital SAT later"
+          body="If you want a human after two lessons, that path is Digital SAT mentoring in Dubai — not an AP package."
+          href="https://anannt.ae/sat-coaching-dubai"
         />
       </section>
 
@@ -88,8 +88,9 @@ export function HomeLanding() {
           Complete lessons you can open today
         </h2>
         <p className="max-w-2xl text-muted-foreground">
-          The map lists RW0–RW12 and M0–M14. Complete lessons carry the full Anannt method. Other units are walkable
-          shells — labelled so unknown skills stay unknown.
+          The map lists RW0–RW12 and M0–M14 so sequence is visible. Two public lessons are faculty-complete:
+          slope in context and some versus all. Other units are unpublished shells or gated — labelled so
+          unknown skills stay unknown.
         </p>
         <ul className="grid gap-3 sm:grid-cols-2">
           <SkillLink
@@ -99,22 +100,10 @@ export function HomeLanding() {
             body="C = 12 + 3d: 12 is the cost at 0 km, 3 is rupees per kilometre. The featured error is swapping rate and start."
           />
           <SkillLink
-            href="/learn/RW8/RW8-L1"
-            id="RW8"
-            title="Sentence boundaries"
-            body="Fused sentences, comma splices, fragments. Two complete ideas need a legal join — a comma alone is not one."
-          />
-          <SkillLink
             href="/learn/RW1/RW1-L1"
             id="RW1"
-            title="Central meaning and scope"
+            title="Some versus all"
             body="Keep some, may, and not studied. Inflating a cautious finding is the attractive wrong answer."
-          />
-          <SkillLink
-            href="/learn/M7/M7-L1"
-            id="M7"
-            title="Rates, units, percents"
-            body="Write the rate with units in both parts. Percent change uses the original amount as the base."
           />
         </ul>
         <Link
