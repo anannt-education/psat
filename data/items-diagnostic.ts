@@ -1,4 +1,5 @@
 import type { Item } from "@/lib/types";
+import { normalizeLegacyDiagnostic, type LegacyDiagnosticItem } from "./normalize-diagnostic"
 
 /**
  * Full-length PSAT/NMSQT diagnostic. 98 operational items + 2 unscored tryouts.
@@ -9,7 +10,7 @@ import type { Item } from "@/lib/types";
  *
  * Tryouts never count toward the diagnostic score or the initial mastery map.
  */
-export const DIAGNOSTIC_ITEMS: Item[] = [
+const RAW_DIAGNOSTIC_ITEMS: LegacyDiagnosticItem[] = [
   {
     id: "d-rw-01",
     domain: "craft",
@@ -1971,3 +1972,5 @@ export const DIAGNOSTIC_ITEMS: Item[] = [
     source: "diagnostic",
   },
 ];
+
+export const DIAGNOSTIC_ITEMS: Item[] = RAW_DIAGNOSTIC_ITEMS.map(normalizeLegacyDiagnostic)

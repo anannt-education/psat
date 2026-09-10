@@ -5,12 +5,12 @@ import { JsonLd } from "@/components/json-ld"
 import { MentorNote } from "@/components/mentor-note"
 import { BRAND, METHOD_STEPS } from "@/lib/brand"
 import { organizationJsonLd, pageMetadata } from "@/lib/seo"
+import { PUBLIC_SEO } from "@/lib/mount"
 
 export const metadata: Metadata = pageMetadata({
-  title: "How Anannt Education teaches PSAT",
-  description:
-    "Anannt Education’s method for PSAT/NMSQT and PSAT 10: orient, diagnose, place, plan, learn, apply, retain, perform. No score guarantees and no College Board affiliation.",
-  path: "/method",
+  title: PUBLIC_SEO.method.title,
+  description: PUBLIC_SEO.method.description,
+  path: PUBLIC_SEO.method.path,
 })
 
 export default function MethodPage() {

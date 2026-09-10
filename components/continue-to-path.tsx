@@ -3,6 +3,8 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useStudent } from "@/lib/storage"
+import { SAT_COACHING_URL } from "@/lib/mount"
+import { trackEvent } from "@/lib/events"
 
 export function ContinueToPath() {
   const { state, hydrated } = useStudent()
@@ -14,11 +16,23 @@ export function ContinueToPath() {
   if (!state.profile) {
     return (
       <div className="flex flex-wrap gap-2">
-        <Button size="lg" render={<Link href="/onboard" />}>
-          Start the PSAT path
+        <Button size="lg" render={<Link href="/diagnostic" />}>
+          Start the SAT preview diagnostic
         </Button>
-        <Button size="lg" variant="outline" render={<Link href="/learn" />}>
-          Browse the curriculum
+        <Button size="lg" variant="outline" render={<Link href="/learn/RW0/RW0-L1" />}>
+          Lesson 1
+        </Button>
+        <Button
+          size="lg"
+          variant="outline"
+          render={
+            <a
+              href={SAT_COACHING_URL}
+              onClick={() => trackEvent("demo_book", { sku: "sat-coaching" })}
+            />
+          }
+        >
+          Digital SAT mentoring
         </Button>
       </div>
     )
