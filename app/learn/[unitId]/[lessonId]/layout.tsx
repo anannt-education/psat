@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/json-ld"
 import { lessonById } from "@/data/lessons"
 import { unitById } from "@/lib/curriculum"
 import { breadcrumbJsonLd, learningResourceJsonLd, pageMetadata } from "@/lib/seo"
+import { isPublicLesson, PUBLIC_LESSONS } from "@/lib/mount"
 
 type Props = { params: Promise<{ unitId: string; lessonId: string }> }
 
@@ -17,10 +18,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/learn/${unitId}/${lessonId}`,
     })
   }
+  const publicLesson = PUBLIC_LESSONS.find((l) => l.id === lesson.id)
   return pageMetadata({
     title: `${unit.id} · ${lesson.title}`,
-    description: lesson.objective,
+    description: publicLesson?.description ?? lesson.objective,
     path: `/learn/${unitId}/${lessonId}`,
+    noIndex: !isPublicLesson(lesson.id),
   })
 }
 

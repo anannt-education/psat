@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     "Anannt Education",
     "digital SAT suite",
     "PSAT diagnostic",
-    "PSAT mock test",
+    "SAT feeder Dubai",
   ],
   robots: { index: true, follow: true },
   openGraph: {

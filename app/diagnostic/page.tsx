@@ -13,6 +13,7 @@ import { DOMAINS } from "@/lib/curriculum"
 import { diagnosticNextStep } from "@/lib/coach"
 import { BRAND } from "@/lib/brand"
 import { useStudent } from "@/lib/storage"
+import { gateUrl } from "@/lib/mount"
 import type { DomainId } from "@/lib/types"
 
 export default function DiagnosticPage() {
@@ -134,7 +135,7 @@ export default function DiagnosticPage() {
           if (idx + 1 < items.length) setAwaitingNext(true)
           else {
             completeDiagnostic(next, items.map((i) => i.id))
-            setDone(true)
+            window.location.assign(gateUrl("diagnostic"))
           }
         }}
       />

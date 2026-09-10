@@ -59,8 +59,9 @@ export default function ForFamiliesPage() {
             <CardTitle>PSAT/NMSQT versus PSAT 10</CardTitle>
           </CardHeader>
           <CardContent className="text-sm leading-relaxed text-muted-foreground">
-            Instruction is shared. National Merit context appears only on the NMSQT track, as official links with no
-            eligibility guarantee. Completing Anannt lessons does not make anyone a semifinalist.
+            Instruction is shared. After two public lessons, families are pointed to Digital SAT
+            mentoring only — never an AP package. Completing Anannt lessons does not award an
+            official score.
           </CardContent>
         </Card>
         <Card>
@@ -75,9 +76,9 @@ export default function ForFamiliesPage() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button render={<Link href="/parent" />}>Open the family summary</Button>
-        <Button variant="outline" render={<Link href="/method" />}>
-          How we teach
+        <Button render={<Link href="/method" />}>How we teach</Button>
+        <Button variant="outline" render={<Link href="/" />}>
+          Open the two public lessons
         </Button>
       </div>
     </article>

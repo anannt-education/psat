@@ -64,7 +64,7 @@ export default function ParentPage() {
           <CardTitle>One or two helpful actions</CardTitle>
         </CardHeader>
         <CardContent className="text-sm leading-relaxed">
-          If a week goes quiet, a ten-minute return on sentence boundaries or slope is enough. Official Bluebook practice
+          If a week goes quiet, a ten-minute return on sentence boundaries or slope is enough. Official digital practice
           is outbound — Anannt never asks for College Board credentials.
         </CardContent>
       </Card>
