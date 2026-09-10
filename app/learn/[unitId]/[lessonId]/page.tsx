@@ -175,7 +175,7 @@ export default function LessonPage({
             total={independent.length}
             onSubmitted={() => {
               if (indIdx + 1 < independent.length) setIndIdx(indIdx + 1)
-            }
+            }}
           />
         </div>
       )}
