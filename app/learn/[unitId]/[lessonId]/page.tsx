@@ -1,6 +1,6 @@
 "use client"
 
-import { use, useMemo, useState } from "react"
+import { use, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,6 +16,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs"
 import { MentorNote } from "@/components/mentor-note"
 import { BRAND } from "@/lib/brand"
 import { emptyState } from "@/lib/coach"
+import { PUBLIC_LESSON_2, studyStartUrl } from "@/lib/gate"
 
 const STEPS = [
   "Objective",
@@ -44,6 +45,12 @@ export default function LessonPage({
   const [indIdx, setIndIdx] = useState(0)
   const [showCompare, setShowCompare] = useState(false)
   const sessionId = useMemo(() => `lesson-${lessonId}`, [lessonId])
+
+  useEffect(() => {
+    if (lesson && step === STEPS.length - 1 && lessonId === PUBLIC_LESSON_2) {
+      window.location.assign(studyStartUrl(unitId))
+    }
+  }, [step, lesson, lessonId, unitId])
 
   if (!lesson || !unit || lesson.unitId !== unitId) {
     const missing = emptyState("lesson-missing")
@@ -178,9 +185,11 @@ export default function LessonPage({
           <Block title="Takeaway" body={lesson.takeaway} />
           {lesson.mentorNote && <MentorNote title="Expert takeaway">{lesson.mentorNote}</MentorNote>}
           {lesson.reviewNote && <p className="text-sm text-muted-foreground">{lesson.reviewNote}</p>}
-          <Button render={<Link href={`/practice/run?mode=independent-quiz&unit=${unitId}`} />}>
-            Independent practice on this unit
-          </Button>
+          {lessonId === PUBLIC_LESSON_2 ? (
+            <Button render={<a href={studyStartUrl(unitId)} />}>Continue on the study desk</Button>
+          ) : (
+            <Button render={<Link href="/learn/RW1/RW1-L1" />}>Continue to lesson 2</Button>
+          )}
         </div>
       )}
 

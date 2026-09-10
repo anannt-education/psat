@@ -1,19 +1,13 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { QuestionPlayer } from "@/components/question-player"
 import { MentorNote } from "@/components/mentor-note"
 import { DIAGNOSTIC_ITEMS } from "@/data/items-diagnostic"
-import { DOMAINS } from "@/lib/curriculum"
-import { diagnosticNextStep } from "@/lib/coach"
-import { BRAND } from "@/lib/brand"
 import { useStudent } from "@/lib/storage"
-import type { DomainId } from "@/lib/types"
+import { studyStartUrl } from "@/lib/gate"
 
 export default function DiagnosticPage() {
   const { completeDiagnostic, state, hydrated } = useStudent()
@@ -28,57 +22,11 @@ export default function DiagnosticPage() {
   if (!hydrated) return <p className="text-muted-foreground">Preparing your domain screening…</p>
 
   if (done && state.diagnostic) {
-    const d = state.diagnostic
-    const next = diagnosticNextStep(d)
+    if (typeof window !== "undefined") {
+      window.location.assign(studyStartUrl("diagnostic"))
+    }
     return (
-      <div className="space-y-6">
-        <div>
-          <p className="text-sm text-muted-foreground">{BRAND.name} · 28-item probe</p>
-          <h1 className="text-3xl font-semibold">Screening results — with uncertainty</h1>
-          <p className="mt-2 max-w-2xl text-muted-foreground">
-            This probe is not sufficient to estimate an official score or to assign every micro-skill. Bands below are
-            Anannt placement hints from a small sample. Untested skills remain unknown.
-          </p>
-        </div>
-        <Alert>
-          <AlertTitle>No official score is shown</AlertTitle>
-          <AlertDescription>
-            Anannt Education does not convert raw percent correct into 320–1520 or invent a percentile. Official scales
-            are cited in Help. Your answers stay on this device.
-          </AlertDescription>
-        </Alert>
-        <MentorNote title={next.title}>
-          <p>{next.body}</p>
-        </MentorNote>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {(Object.keys(DOMAINS) as DomainId[]).map((id) => {
-            const ev = d.domainEvidence[id]
-            const place = d.placement[id]
-            return (
-              <Card key={id}>
-                <CardHeader>
-                  <CardTitle className="text-base">{DOMAINS[id].title}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm">
-                  <p>
-                    {ev.correct} of {ev.total} in this screening
-                  </p>
-                  <p className="mt-1 font-medium capitalize">{ev.band.replace("-", " ")}</p>
-                  <p className="text-muted-foreground">
-                    Initial placement: {place}. n = {ev.total} is small.
-                  </p>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button render={<Link href={next.href} />}>{next.cta}</Button>
-          <Button variant="outline" render={<Link href="/today" />}>
-            See today’s plan
-          </Button>
-        </div>
-      </div>
+      <p className="text-muted-foreground">Opening the study desk…</p>
     )
   }
 
@@ -134,7 +82,7 @@ export default function DiagnosticPage() {
           if (idx + 1 < items.length) setAwaitingNext(true)
           else {
             completeDiagnostic(next, items.map((i) => i.id))
-            setDone(true)
+            window.location.assign(studyStartUrl("diagnostic"))
           }
         }}
       />

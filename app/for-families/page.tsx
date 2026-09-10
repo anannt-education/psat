@@ -10,7 +10,7 @@ import { organizationJsonLd, pageMetadata } from "@/lib/seo"
 export const metadata: Metadata = pageMetadata({
   title: "PSAT prep for families",
   description:
-    "How families can support Anannt Education’s PSAT/NMSQT and PSAT 10 path: protect study days, ask for one worked example, and never treat practice percent as an official score.",
+    "Protect study days. Ask for one worked example. Do not treat a practice percent as an official score. SAT mentoring lives on anannt.ae/sat-coaching-dubai.",
   path: "/for-families",
 })
 
@@ -59,8 +59,8 @@ export default function ForFamiliesPage() {
             <CardTitle>PSAT/NMSQT versus PSAT 10</CardTitle>
           </CardHeader>
           <CardContent className="text-sm leading-relaxed text-muted-foreground">
-            Instruction is shared. National Merit context appears only on the NMSQT track, as official links with no
-            eligibility guarantee. Completing Anannt lessons does not make anyone a semifinalist.
+            Instruction is shared. This path is a SAT feeder. It does not sell AP, and it does not treat
+            a practice percent as an official score.
           </CardContent>
         </Card>
         <Card>
@@ -75,7 +75,7 @@ export default function ForFamiliesPage() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button render={<Link href="/parent" />}>Open the family summary</Button>
+        <Button render={<a href="https://anannt.ae/sat-coaching-dubai" />}>Digital SAT mentoring</Button>
         <Button variant="outline" render={<Link href="/method" />}>
           How we teach
         </Button>

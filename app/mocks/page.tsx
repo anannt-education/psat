@@ -85,7 +85,7 @@ function StartCard({
         <CardTitle>Start a two-stage rehearsal</CardTitle>
         <CardDescription>
           Full mocks are designed for laptop or desktop. Smaller screens are fine for learning; a realistic mock wants a
-          larger display. This is not identical to Bluebook and does not confer accommodation approval.
+          larger display. This is not identical to College Board’s digital practice app and does not confer accommodation approval.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -377,7 +377,7 @@ function MockResults({ attempt }: { attempt: Attempt }) {
       <Alert>
         <AlertTitle>Evidence, with limits</AlertTitle>
         <AlertDescription>
-          Raw accuracy by module, routing branch, and timing profile. No scaled score, no percentile, no National Merit
+          Raw accuracy by module, routing branch, and timing profile. No scaled score, no percentile, no scholarship
           implication. One rehearsal is not a readiness label — those consider at least two fresh full mocks after
           calibration work that this slice does not claim.
         </AlertDescription>

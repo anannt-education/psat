@@ -6,9 +6,9 @@ export const BRAND = {
   mentor: "Your Anannt mentor",
   tagline: "Understand what you are learning, know what to do next, and practise until you can apply it independently.",
   description:
-    "Anannt Education’s guided path for PSAT/NMSQT and PSAT 10: Reading and Writing and Math lessons, a domain diagnostic, independent practice, and adaptive mock rehearsal. Not College Board exam delivery.",
+    "A short SAT feeder: slope-in-context and some-versus-all, free, no account. Dual College Board disclaimer. Digital SAT mentoring later—never an AP upsell.",
   disclaimer:
-    "Anannt Education is not affiliated with the College Board. This path does not deliver the official exam, convert practice into 320–1520 scores or percentiles, or decide National Merit eligibility.",
+    "Anannt Education is not affiliated with the College Board. This path does not deliver the official exam or convert practice into 320–1520 scores or percentiles.",
 } as const
 
 export const METHOD_STEPS = [
@@ -21,13 +21,13 @@ export const METHOD_STEPS = [
   { title: "Retain", body: "Delayed fresh items. Coverage, accuracy, retention, and timed performance stay separate numbers." },
   { title: "Perform", body: "Mixed sets, timed modules, and a shortened two-stage mock that freezes an Anannt routing rule." },
   { title: "Reflect", body: "An error notebook with knowledge, interpretation, method, calculation, and timing — suggestions, not diagnoses." },
-  { title: "Test day", body: "Outbound Bluebook practice and a logistics checklist. Anannt never collects College Board credentials." },
+  { title: "Test day", body: "Outbound College Board digital practice and a logistics checklist. Anannt never collects College Board credentials." },
 ] as const
 
 export const TRUST_POINTS = [
   {
     title: "College Board exam-prep authors, not a score mill",
-    body: "Lessons are written to the digital PSAT suite: slope as rate versus start, sentence boundaries, some versus all. We do not invent percentiles or promise National Merit.",
+    body: "Lessons are written to the digital PSAT suite: slope as rate versus start, sentence boundaries, some versus all. We do not invent percentiles or promise a scholarship outcome.",
   },
   {
     title: "A mentor in the room",

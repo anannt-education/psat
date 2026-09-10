@@ -82,7 +82,7 @@ export default function OrientPage() {
             <li>Retain — delayed fresh items. Coverage, accuracy, retention, and timed performance stay separate.</li>
             <li>Perform — mixed sets, timed modules, two-stage mocks.</li>
             <li>Reflect — the error notebook and a revised plan.</li>
-            <li>Prepare for test day — Bluebook outbound practice and a practical checklist.</li>
+            <li>Prepare for test day — outbound College Board digital practice and a practical checklist.</li>
           </ol>
         </CardContent>
       </Card>
@@ -92,9 +92,9 @@ export default function OrientPage() {
           <CardTitle>What this product will not do</CardTitle>
         </CardHeader>
         <CardContent className="text-sm leading-relaxed text-muted-foreground">
-          It does not deliver the official exam, guarantee a score or scholarship, decide National Merit eligibility,
-          offer live classes, or rank students publicly. It does not invent a 320–1520 from a percent correct. Official
-          Bluebook practice is an outbound task; Anannt never collects College Board credentials.
+          It does not deliver the official exam, promise a score or scholarship, offer live classes, or rank students
+          publicly. It does not invent a 320–1520 from a percent correct. Official digital practice is an outbound
+          task; Anannt never collects College Board credentials.
         </CardContent>
       </Card>
 
