@@ -21,6 +21,7 @@ function isPublic(pathname: string): boolean {
   if (PUBLIC_EXACT.has(pathname)) return true
   if (PUBLIC_LESSONS.has(pathname)) return true
   if (pathname.startsWith("/api/events")) return true
+  if (pathname.startsWith("/api/keys")) return true
   if (pathname.startsWith("/opengraph-image")) return true
   if (pathname === "/icon" || pathname.startsWith("/icon/")) return true
   if (pathname.startsWith("/apple-icon")) return true
