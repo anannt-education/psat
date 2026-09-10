@@ -86,6 +86,7 @@ export function QuestionPlayer({
     submitted && correct !== null ? attemptCoach(item, { correct, assisted, revealed }) : null
 
   const choices = useMemo(() => item.choices ?? [], [item])
+  const isMcq = item.format === "mcq" || Boolean(choices.length)
 
   if (quarantined) {
     const empty = emptyState("quarantine")
@@ -126,11 +127,11 @@ export function QuestionPlayer({
       <CardContent className="space-y-4">
         <ItemDiagram kind={item.diagram} />
         <p className="text-[15px] leading-relaxed">{item.stem}</p>
-        {item.format === "numeric" && item.numeric && (
+        {!isMcq && item.numeric && (
           <p className="text-xs text-muted-foreground">{item.numeric.formatsNote}</p>
         )}
 
-        {item.format === "mcq" ? (
+        {isMcq ? (
           <RadioGroup
             value={answer}
             onValueChange={(v) => !submitted && !disabled && setAnswer(String(v))}

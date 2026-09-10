@@ -50,7 +50,7 @@ export function attemptCoach(
   item: Item,
   result: { correct: boolean; assisted: boolean; revealed: boolean }
 ): { title: string; body: string } {
-  const tag = item.misconceptionTag
+  const tag = item.misconceptionTag ?? ""
   const skillBit = skillSpecificNote(item)
 
   if (result.revealed && !result.correct) {

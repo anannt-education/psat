@@ -16,7 +16,8 @@ function parseNumeric(raw: string): number | null {
 }
 
 export function isCorrectAnswer(item: Item, raw: string): boolean {
-  if (item.format === "mcq") {
+  const format = item.format ?? (item.choices?.length ? "mcq" : "numeric")
+  if (format === "mcq") {
     return raw === item.correctChoiceId
   }
   if (!item.numeric) return false
@@ -27,7 +28,8 @@ export function isCorrectAnswer(item: Item, raw: string): boolean {
 }
 
 export function correctAnswerLabel(item: Item): string {
-  if (item.format === "mcq") {
+  const format = item.format ?? (item.choices?.length ? "mcq" : "numeric")
+  if (format === "mcq") {
     const choice = item.choices?.find((c) => c.id === item.correctChoiceId)
     return choice ? `${choice.id}. ${choice.text}` : item.correctChoiceId ?? ""
   }
@@ -59,13 +61,14 @@ export function hintText(item: Item, level: 1 | 2 | 3): string {
 
 export function suggestErrorCategory(item: Item, timed: boolean): import("./types").ErrorCategory {
   if (timed && item.section === "math") return "timing"
-  if (item.misconceptionTag.includes("scope") || item.misconceptionTag.includes("beyond-text")) {
+  const tag = item.misconceptionTag ?? ""
+  if (tag.includes("scope") || tag.includes("beyond-text")) {
     return "interpretation"
   }
-  if (item.misconceptionTag.includes("slope-intercept") || item.misconceptionTag.includes("method")) {
+  if (tag.includes("slope-intercept") || tag.includes("method")) {
     return "method"
   }
-  if (item.format === "numeric" || item.misconceptionTag.includes("arithmetic")) {
+  if (item.format === "numeric" || tag.includes("arithmetic")) {
     return "calculation"
   }
   return "knowledge"

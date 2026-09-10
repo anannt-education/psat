@@ -1,4 +1,5 @@
-import type { Item } from "@/lib/types";
+import { sectionFor } from "@/data/author"
+import type { DomainId, Item } from "@/lib/types"
 
 /**
  * Full-length PSAT/NMSQT diagnostic. 98 operational items + 2 unscored tryouts.
@@ -8,8 +9,67 @@ import type { Item } from "@/lib/types";
  * Section 4: 22 Math scored.
  *
  * Tryouts never count toward the diagnostic score or the initial mastery map.
+ * Stems use a legacy shape (domain aliases, `correct`, `passage`); they are
+ * mapped onto Item at this boundary so the bank is not rewritten.
  */
-export const DIAGNOSTIC_ITEMS: Item[] = [
+
+const DOMAIN_ALIAS: Record<string, DomainId> = {
+  craft: "craft-structure",
+  info: "information-ideas",
+  expression: "expression-of-ideas",
+  conventions: "standard-english-conventions",
+  algebra: "algebra",
+  advanced: "advanced-math",
+  "problem-solving": "problem-solving-data-analysis",
+  geometry: "geometry-trigonometry",
+}
+
+type LegacyDiagnostic = {
+  id: string
+  domain: string
+  skill: string
+  difficulty: number
+  stem: string
+  choices?: { id: string; text: string }[]
+  correct?: string
+  explanation?: string
+  passage?: string | null
+  passageTitle?: string | null
+  calculator?: boolean
+  gridIn?: boolean
+  source?: string
+}
+
+function canonicalDomain(raw: string): DomainId {
+  return DOMAIN_ALIAS[raw] ?? (raw as DomainId)
+}
+
+function normalizeLegacyDiagnostic(raw: LegacyDiagnostic): Item {
+  const domain = canonicalDomain(raw.domain)
+  const difficulty = raw.difficulty <= 1 ? "foundation" : raw.difficulty >= 3 ? "stretch" : "core"
+  return {
+    id: raw.id,
+    version: 1,
+    familyId: raw.id,
+    section: sectionFor(domain),
+    domain,
+    unitId: "diagnostic",
+    skillId: raw.skill,
+    difficulty,
+    pool: "diagnostic",
+    format: raw.gridIn ? "numeric" : "mcq",
+    stimulus: raw.passage || undefined,
+    stimulusLabel: raw.passageTitle || undefined,
+    stem: raw.stem,
+    choices: raw.choices?.map((c) => ({ id: c.id, text: c.text, rationale: "" })),
+    correctChoiceId: raw.correct,
+    explanation: raw.explanation ?? "",
+    fullReasoning: raw.explanation ?? "",
+    misconceptionTag: "",
+  }
+}
+
+const DIAGNOSTIC_RAW: LegacyDiagnostic[] = [
   {
     id: "d-rw-01",
     domain: "craft",
@@ -1970,4 +2030,6 @@ export const DIAGNOSTIC_ITEMS: Item[] = [
     gridIn: false,
     source: "diagnostic",
   },
-];
+]
+
+export const DIAGNOSTIC_ITEMS: Item[] = DIAGNOSTIC_RAW.map(normalizeLegacyDiagnostic)

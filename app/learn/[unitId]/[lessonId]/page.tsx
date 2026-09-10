@@ -132,7 +132,7 @@ export default function LessonPage({
             if (!correct && lesson.comparisonActivity && check && check.misconceptionTag === lesson.comparisonActivity.triggerTag) {
               setShowCompare(true)
             }
-          }
+          }}
         />
       )}
       {step === 6 && checks[1] && (
@@ -148,7 +148,7 @@ export default function LessonPage({
             if (!correct && lesson.comparisonActivity && check && check.misconceptionTag === lesson.comparisonActivity.triggerTag) {
               setShowCompare(true)
             }
-          }
+          }}
         />
       )}
       {showCompare && lesson.comparisonActivity && (step === 5 || step === 6) && (
@@ -176,7 +176,7 @@ export default function LessonPage({
             total={independent.length}
             onSubmitted={() => {
               if (indIdx + 1 < independent.length) setIndIdx(indIdx + 1)
-            }
+            }}
           />
         </div>
       )}
