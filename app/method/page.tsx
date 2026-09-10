@@ -7,9 +7,9 @@ import { BRAND, METHOD_STEPS } from "@/lib/brand"
 import { organizationJsonLd, pageMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = pageMetadata({
-  title: "How Anannt Education teaches PSAT",
+  title: "How Anannt Education teaches PSAT as a SAT feeder",
   description:
-    "Anannt Education’s method for PSAT/NMSQT and PSAT 10: orient, diagnose, place, plan, learn, apply, retain, perform. No score guarantees and no College Board affiliation.",
+    "How Anannt Education teaches PSAT/NMSQT as a SAT feeder: two public lessons, then Digital SAT mentoring if you want a person. Never an AP upsell in Dubai.",
   path: "/method",
 })
 

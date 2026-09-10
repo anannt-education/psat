@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { BRAND } from "@/lib/brand"
-import { LESSONS } from "@/data/lessons"
 import { UNITS } from "@/lib/curriculum"
+import { PUBLIC_LESSONS, SITE_URL as MOUNT_URL } from "@/lib/mount"
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3847").replace(/\/$/, "")
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? process.env.SITE_URL ?? MOUNT_URL).replace(/\/$/, "")
 
 export function absoluteUrl(path = "/") {
   if (path.startsWith("http")) return path
@@ -14,7 +14,7 @@ export function pageMetadata({
   title,
   description,
   path,
-  noIndex = false,
+  noIndex = true,
 }: {
   title: string
   description: string
@@ -45,17 +45,19 @@ export function pageMetadata({
   }
 }
 
-export const PUBLIC_PATHS: { path: string; title: string; description: string }[] = [
+export const PUBLIC_PATHS: { path: string; title: string; description: string; index?: boolean }[] = [
   {
     path: "/",
-    title: "PSAT/NMSQT and PSAT 10 path",
-    description: BRAND.description,
+    title: "PSAT/NMSQT — SAT feeder, two public lessons",
+    description:
+      "Slope in context and some-versus-all are open with no account. A SAT feeder from Anannt Education — not an AP course. Full PSAT/NMSQT® disclaimer below.",
+    index: true,
   },
   {
     path: "/method",
-    title: "How Anannt Education teaches PSAT",
+    title: "How Anannt Education teaches PSAT as a SAT feeder",
     description:
-      "Anannt Education’s method for PSAT/NMSQT and PSAT 10: orient, diagnose, place, plan, learn, apply, retain, perform. No score guarantees and no College Board affiliation.",
+      "How Anannt Education teaches PSAT/NMSQT as a SAT feeder: two public lessons, then Digital SAT mentoring if you want a person. Never an AP upsell in Dubai.",
   },
   {
     path: "/for-families",
@@ -77,9 +79,9 @@ export const PUBLIC_PATHS: { path: string; title: string; description: string }[
   },
   {
     path: "/diagnostic",
-    title: "PSAT domain screening",
+    title: "PSAT domain screening start",
     description:
-      "A 28-item Anannt Education diagnostic across eight official PSAT domains. Placement hints with uncertainty — not an official 320–1520 score.",
+      "Start a short PSAT domain screening with no account. After you submit, we point only to Digital SAT mentoring at Anannt in Dubai — never an AP course.",
   },
   {
     path: "/today",
@@ -118,9 +120,9 @@ export const PUBLIC_PATHS: { path: string; title: string; description: string }[
   },
   {
     path: "/help",
-    title: "Help, Bluebook, and test day",
+    title: "Help and Digital SAT mentoring",
     description:
-      "Accessibility, outbound College Board Bluebook practice, test-day checklist, and careful National Merit context from Anannt Education.",
+      "Accessibility, test-day logistics, and Digital SAT mentoring from Anannt Education. This PSAT path does not upsell AP courses.",
   },
   {
     path: "/parent",
@@ -145,23 +147,30 @@ export function metadataForPath(path: string): Metadata {
       path,
     })
   }
-  return pageMetadata(row)
+  return pageMetadata({
+    title: row.title,
+    description: row.description,
+    path: row.path,
+    noIndex: row.index !== true,
+  })
 }
 
 export function sitemapEntries() {
-  const staticUrls = PUBLIC_PATHS.map((p) => ({
-    url: absoluteUrl(p.path),
-    lastModified: new Date(),
-    changeFrequency: p.path === "/" || p.path === "/learn" ? ("weekly" as const) : ("monthly" as const),
-    priority: p.path === "/" ? 1 : p.path === "/learn" || p.path === "/method" ? 0.8 : 0.6,
-  }))
-  const lessons = LESSONS.map((lesson) => ({
-    url: absoluteUrl(`/learn/${lesson.unitId}/${lesson.id}`),
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: lesson.complete ? 0.7 : 0.45,
-  }))
-  return [...staticUrls, ...lessons]
+  const now = new Date()
+  return [
+    {
+      url: absoluteUrl("/"),
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 1,
+    },
+    ...PUBLIC_LESSONS.map((lesson, i) => ({
+      url: absoluteUrl(lesson.path),
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: i === 0 ? 0.9 : 0.8,
+    })),
+  ]
 }
 
 export function organizationJsonLd() {
@@ -172,6 +181,14 @@ export function organizationJsonLd() {
     alternateName: BRAND.shortName,
     description: BRAND.description,
     url: SITE_URL,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Office 105, Bank Street Building, Burjuman Metro Exit 2",
+      addressLocality: "Dubai",
+      addressCountry: "AE",
+    },
+    telephone: "+971585853551",
+    email: "wecare@anannt.ae",
     slogan: BRAND.tagline,
     knowsAbout: ["PSAT/NMSQT", "PSAT 10", "SAT Suite", "Reading and Writing", "High school mathematics"],
   }

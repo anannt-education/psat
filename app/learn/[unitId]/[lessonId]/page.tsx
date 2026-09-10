@@ -16,6 +16,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs"
 import { MentorNote } from "@/components/mentor-note"
 import { BRAND } from "@/lib/brand"
 import { emptyState } from "@/lib/coach"
+import { gateUrl, PUBLIC_LESSONS } from "@/lib/mount"
 
 const STEPS = [
   "Objective",
@@ -67,7 +68,12 @@ export default function LessonPage({
     const n = Math.max(0, Math.min(totalSteps - 1, next))
     setStep(n)
     saveLessonProgress(lessonId, n, n === totalSteps - 1)
-    if (n === totalSteps - 1) completeTask(`task-lesson-${unitId}`)
+    if (n === totalSteps - 1) {
+      completeTask(`task-lesson-${unitId}`)
+      if (lessonId === PUBLIC_LESSONS[1].id) {
+        window.location.assign(gateUrl(unitId))
+      }
+    }
   }
 
   return (
@@ -125,7 +131,7 @@ export default function LessonPage({
             if (!correct && lesson.comparisonActivity && check && check.misconceptionTag === lesson.comparisonActivity.triggerTag) {
               setShowCompare(true)
             }
-          }
+          }}
         />
       )}
       {step === 6 && checks[1] && (
@@ -141,7 +147,7 @@ export default function LessonPage({
             if (!correct && lesson.comparisonActivity && check && check.misconceptionTag === lesson.comparisonActivity.triggerTag) {
               setShowCompare(true)
             }
-          }
+          }}
         />
       )}
       {showCompare && lesson.comparisonActivity && (step === 5 || step === 6) && (
@@ -169,7 +175,7 @@ export default function LessonPage({
             total={independent.length}
             onSubmitted={() => {
               if (indIdx + 1 < independent.length) setIndIdx(indIdx + 1)
-            }
+            }}
           />
         </div>
       )}
@@ -178,9 +184,13 @@ export default function LessonPage({
           <Block title="Takeaway" body={lesson.takeaway} />
           {lesson.mentorNote && <MentorNote title="Expert takeaway">{lesson.mentorNote}</MentorNote>}
           {lesson.reviewNote && <p className="text-sm text-muted-foreground">{lesson.reviewNote}</p>}
-          <Button render={<Link href={`/practice/run?mode=independent-quiz&unit=${unitId}`} />}>
-            Independent practice on this unit
-          </Button>
+          {lessonId === PUBLIC_LESSONS[0].id ? (
+            <Button render={<Link href={PUBLIC_LESSONS[1].path} />}>Continue to lesson 2</Button>
+          ) : lessonId === PUBLIC_LESSONS[1].id ? (
+            <Button onClick={() => window.location.assign(gateUrl(unitId))}>Finish lesson 2</Button>
+          ) : (
+            <Button onClick={() => window.location.assign(gateUrl(unitId))}>Continue</Button>
+          )}
         </div>
       )}
 
