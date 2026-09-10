@@ -27,7 +27,7 @@ export const PUBLIC_LESSONS = [
   },
 ] as const;
 
-export const PUBLIC_LESSON_IDS = new Set(PUBLIC_LESSONS.map((l) => l.id));
+export const PUBLIC_LESSON_IDS: ReadonlySet<string> = new Set(PUBLIC_LESSONS.map((l) => l.id));
 export const LESSON_2 = PUBLIC_LESSONS[1];
 
 export function absUrl(path = "/") {
@@ -62,7 +62,7 @@ export const LEGAL = {
   ap: "AP® is a trademark registered by the College Board, which is not affiliated with, and does not endorse, this website.",
   psat: "PSAT/NMSQT® is a registered trademark of the College Board and the National Merit Scholarship Corporation, which are not affiliated with, and do not endorse, this website.",
   supplement:
-    "This studio is a self-study supplement. It does not predict an official AP score and is not Bluebook or AP Classroom.",
+    "This studio is a self-study supplement. It does not predict an official PSAT or SAT score.",
   nap: "Anannt Education · Office 105, Bank Street Building, Burjuman Metro Exit 2, Dubai · +971 58585 3551 · wecare@anannt.ae",
 } as const;
 
