@@ -1,4 +1,88 @@
-import type { Item } from "@/lib/types";
+import type { Difficulty, DomainId, Item } from "@/lib/types";
+import { sectionFor, skillIdFor } from "./author";
+
+type DiagnosticDomain =
+  | "craft"
+  | "info"
+  | "conventions"
+  | "expression"
+  | "algebra"
+  | "advanced"
+  | "geometry"
+  | "problem-solving";
+
+type DiagnosticDraft = {
+  id: string;
+  domain: DiagnosticDomain;
+  skill: string;
+  difficulty: 1 | 2 | 3 | number;
+  stem: string;
+  choices: { id: string; text: string }[];
+  correct: string;
+  explanation: string;
+  passage: string | null;
+  passageTitle: string | null;
+  calculator: boolean;
+  gridIn: boolean;
+  source: string;
+};
+
+const DOMAIN_MAP: Record<DiagnosticDomain, DomainId> = {
+  craft: "craft-structure",
+  info: "information-ideas",
+  conventions: "standard-english-conventions",
+  expression: "expression-of-ideas",
+  algebra: "algebra",
+  advanced: "advanced-math",
+  geometry: "geometry-trigonometry",
+  "problem-solving": "problem-solving-data-analysis",
+};
+
+const UNIT_FOR_DOMAIN: Record<DomainId, string> = {
+  "information-ideas": "RW1",
+  "craft-structure": "RW5",
+  "expression-of-ideas": "RW10",
+  "standard-english-conventions": "RW8",
+  algebra: "M1",
+  "advanced-math": "M4",
+  "problem-solving-data-analysis": "M7",
+  "geometry-trigonometry": "M12",
+};
+
+function mapDifficulty(n: number): Difficulty {
+  if (n <= 1) return "foundation";
+  if (n === 2) return "core";
+  return "stretch";
+}
+
+function fromDiagnosticDraft(raw: DiagnosticDraft): Item {
+  const domain = DOMAIN_MAP[raw.domain];
+  const unitId = UNIT_FOR_DOMAIN[domain];
+  return {
+    id: raw.id,
+    version: 1,
+    familyId: raw.id,
+    section: sectionFor(domain),
+    domain,
+    unitId,
+    skillId: skillIdFor(unitId),
+    difficulty: mapDifficulty(raw.difficulty),
+    pool: "diagnostic",
+    format: raw.gridIn ? "numeric" : "mcq",
+    stimulus: raw.passage ?? undefined,
+    stimulusLabel: raw.passageTitle ?? undefined,
+    stem: raw.stem,
+    choices: raw.choices.map((choice) => ({
+      id: choice.id,
+      text: choice.text,
+      rationale: choice.id === raw.correct ? raw.explanation : "Distractor for this screening item.",
+    })),
+    correctChoiceId: raw.correct,
+    explanation: raw.explanation,
+    fullReasoning: raw.explanation,
+    misconceptionTag: raw.skill,
+  };
+}
 
 /**
  * Full-length PSAT/NMSQT diagnostic. 98 operational items + 2 unscored tryouts.
@@ -9,7 +93,7 @@ import type { Item } from "@/lib/types";
  *
  * Tryouts never count toward the diagnostic score or the initial mastery map.
  */
-export const DIAGNOSTIC_ITEMS: Item[] = [
+const RAW_DIAGNOSTIC: DiagnosticDraft[] = [
   {
     id: "d-rw-01",
     domain: "craft",
@@ -1971,3 +2055,5 @@ export const DIAGNOSTIC_ITEMS: Item[] = [
     source: "diagnostic",
   },
 ];
+
+export const DIAGNOSTIC_ITEMS: Item[] = RAW_DIAGNOSTIC.map(fromDiagnosticDraft);
