@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { BRAND } from "@/lib/brand"
 import { UNITS } from "@/lib/curriculum"
 import { PUBLIC_LESSON_PATHS, SITE_URL, absUrl } from "@/lib/mount"
+export { SITE_URL }
 
 export function absoluteUrl(path = "/") {
   if (path.startsWith("http")) return path
