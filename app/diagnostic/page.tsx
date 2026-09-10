@@ -14,6 +14,7 @@ import { diagnosticNextStep } from "@/lib/coach"
 import { BRAND } from "@/lib/brand"
 import { useStudent } from "@/lib/storage"
 import type { DomainId } from "@/lib/types"
+import { redirectToGate } from "@/lib/gate-client"
 
 export default function DiagnosticPage() {
   const { completeDiagnostic, state, hydrated } = useStudent()
@@ -134,7 +135,7 @@ export default function DiagnosticPage() {
           if (idx + 1 < items.length) setAwaitingNext(true)
           else {
             completeDiagnostic(next, items.map((i) => i.id))
-            setDone(true)
+            redirectToGate("diagnostic")
           }
         }}
       />

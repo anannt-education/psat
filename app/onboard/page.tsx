@@ -112,8 +112,7 @@ export default function OnboardPage() {
         <CardHeader>
           <CardTitle>Assessment track</CardTitle>
           <CardDescription>
-            Instruction is shared. Reporting, exam guidance, and National Merit context are not. PSAT 8/9 is out of this
-            release.
+            Instruction is shared. Reporting differs by sitting. PSAT 8/9 is out of this release.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -123,8 +122,7 @@ export default function OnboardPage() {
               <span>
                 <span className="font-medium">PSAT/NMSQT</span>
                 <span className="block text-sm text-muted-foreground">
-                  Official scale 320–1520 (sections 160–760). National Merit information appears only in Help, with
-                  dated official links and no eligibility guarantee.
+                  Official scale 320–1520 (sections 160–760). This path does not promise scholarships.
                 </span>
               </span>
             </label>
@@ -133,8 +131,7 @@ export default function OnboardPage() {
               <span>
                 <span className="font-medium">PSAT 10</span>
                 <span className="block text-sm text-muted-foreground">
-                  Same score scale and shared core lessons. Distinct onboarding and reports — no National Merit
-                  counselling in this track.
+                  Same score scale and shared core lessons. Distinct reports. SAT feeder only — never an AP upsell.
                 </span>
               </span>
             </label>

@@ -10,10 +10,10 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { useStudent } from "@/lib/storage"
 import { CONTENT_REVIEW_DATE } from "@/lib/types"
+import { SAT_MENTORING_URL, gateHref } from "@/lib/mount"
 
 export default function HelpPage() {
   const { state, addBluebook, hydrated } = useStudent()
-  const nmsqt = state.profile?.track !== "psat-10"
   const [testName, setTestName] = useState("Bluebook full PSAT practice")
   const [total, setTotal] = useState("")
   const [notes, setNotes] = useState("")
@@ -25,9 +25,9 @@ export default function HelpPage() {
       <div>
         <h1 className="text-3xl font-semibold">Help</h1>
         <p className="mt-2 text-muted-foreground">
-          Accessibility, official Bluebook practice, test-day logistics, and careful National Merit context. Academic
-          facts last reviewed {CONTENT_REVIEW_DATE}. Check current College Board guides before every sitting. Anannt
-          Education authors this guidance; we are not affiliated with the College Board.
+          Accessibility, outbound College Board practice, and Digital SAT mentoring. Academic facts
+          last reviewed {CONTENT_REVIEW_DATE}. Anannt Education authors this guidance; we are not
+          affiliated with the College Board.
         </p>
       </div>
 
@@ -42,10 +42,10 @@ export default function HelpPage() {
       </section>
 
       <section id="bluebook" className="space-y-3">
-        <h2 className="text-xl font-medium">Official Bluebook practice</h2>
+        <h2 className="text-xl font-medium">Official College Board practice (outbound)</h2>
         <p className="text-sm leading-relaxed">
-          Practise in College Board’s Bluebook, then record a self-reported result here. Anannt does not assume an API
-          exists and will not collect College Board credentials.
+          Practise in College Board’s official digital tools, then record a self-reported result here.
+          Anannt does not collect College Board credentials. This studio is not exam delivery.
         </p>
         <Button render={<a href="https://bluebook.collegeboard.org/students/practice" target="_blank" rel="noreferrer" />}>
           Open Bluebook practice (outbound)
@@ -96,7 +96,7 @@ export default function HelpPage() {
         <h2 className="text-xl font-medium">Test-day checklist</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed">
           <li>Confirm the exact product you are sitting (PSAT/NMSQT vs PSAT 10) with your school, not only this app.</li>
-          <li>Complete at least one official Bluebook practice so the tools are not new on the day.</li>
+          <li>Complete at least one official College Board digital practice so the tools are not new on the day.</li>
           <li>Know the two-module structure, the 10-minute break, and that you cannot return to a submitted module.</li>
           <li>Charge the allowed device; follow school rules for calculators and reference use.</li>
           <li>Do not cram a new Anannt unit the night before. Retrieve weak skills, then stop.</li>
@@ -104,39 +104,26 @@ export default function HelpPage() {
         </ul>
       </section>
 
-      <section id="nmsqt" className="space-y-3">
-        <h2 className="text-xl font-medium">National Merit information</h2>
-        {nmsqt ? (
-          <Alert>
-            <AlertTitle>NMSQT track only · dated {CONTENT_REVIEW_DATE}</AlertTitle>
-            <AlertDescription className="space-y-2">
-              <p>
-                National Merit scholarship programmes use PSAT/NMSQT as an entry vehicle. Eligibility involves more than
-                a practice score, particularly for students outside the United States. Completing Anannt lessons does not
-                make you a National Merit entrant, semi-finalist, or scholar.
-              </p>
-              <p>
-                We do not publish cutoffs, because they change by year and state, and because this product has no
-                validated score estimator. Read the current student guide and entry-year materials:
-              </p>
-              <p>
-                <a
-                  className="underline"
-                  href="https://satsuite.collegeboard.org/media/pdf/psat-nmsqt-student-guide.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  PSAT/NMSQT Student Guide (PDF)
-                </a>
-              </p>
-            </AlertDescription>
-          </Alert>
-        ) : (
-          <p className="text-sm text-muted-foreground">
-            You are on the PSAT 10 track. National Merit counselling is not shown here. Switch tracks in onboarding only
-            if you are actually sitting the NMSQT.
-          </p>
-        )}
+      <section id="sat-mentoring" className="space-y-3">
+        <h2 className="text-xl font-medium">Digital SAT mentoring</h2>
+        <Alert>
+          <AlertTitle>SAT feeder only</AlertTitle>
+          <AlertDescription className="space-y-2">
+            <p>
+              After two honest lessons, a person in Burjuman can sit with Digital SAT work. This path
+              does not send you to AP packages and does not promise scholarships.
+            </p>
+            <p>
+              <a className="underline" href={SAT_MENTORING_URL}>
+                Digital SAT mentoring
+              </a>
+              {" · "}
+              <a className="underline" href={gateHref("")}>
+                Continue on study.anannt.ae/start
+              </a>
+            </p>
+          </AlertDescription>
+        </Alert>
       </section>
 
       <Accordion>
