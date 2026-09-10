@@ -16,6 +16,9 @@ import { Breadcrumbs } from "@/components/breadcrumbs"
 import { MentorNote } from "@/components/mentor-note"
 import { BRAND } from "@/lib/brand"
 import { emptyState } from "@/lib/coach"
+import { trackEvent } from "@/lib/events"
+import { continueOrStart } from "@/lib/gate-client"
+import { PUBLIC_LESSON_2 } from "@/lib/mount"
 
 const STEPS = [
   "Objective",
@@ -67,7 +70,13 @@ export default function LessonPage({
     const n = Math.max(0, Math.min(totalSteps - 1, next))
     setStep(n)
     saveLessonProgress(lessonId, n, n === totalSteps - 1)
-    if (n === totalSteps - 1) completeTask(`task-lesson-${unitId}`)
+    if (n === totalSteps - 1) {
+      completeTask(`task-lesson-${unitId}`)
+      if (lessonId === PUBLIC_LESSON_2.id) {
+        trackEvent("lesson2_complete", { sku: lessonId })
+        continueOrStart(PUBLIC_LESSON_2.unit)
+      }
+    }
   }
 
   return (

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ContinueToPath } from "@/components/continue-to-path"
 import { BRAND, METHOD_STEPS, TRUST_POINTS } from "@/lib/brand"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { PUBLIC_LESSON_1, PUBLIC_LESSON_2, SAT_COACHING_URL } from "@/lib/mount"
 
 export function HomeLanding() {
   return (
@@ -12,9 +13,8 @@ export function HomeLanding() {
           PSAT/NMSQT and PSAT 10 prep with a mentor in the work, not a slogan on the banner.
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          {BRAND.tagline} Anannt Education writes the lessons, the diagnostic, and the mock routing rule. We teach the
-          digital suite — Reading and Writing and Math — without claiming College Board affiliation or inventing a
-          320–1520 from a practice percent.
+          {BRAND.tagline} This is a Digital SAT preview — not an AP course. Two public lessons, then mentoring on
+          Digital SAT only. Anannt does not invent a 320–1520 or a National Merit promise.
         </p>
         <ContinueToPath />
       </section>
@@ -25,18 +25,18 @@ export function HomeLanding() {
         </h2>
         <IntentCard
           title="PSAT/NMSQT"
-          body="October sitting, 320–1520 official scale cited in Help, National Merit context only as dated official links — never an eligibility promise."
-          href="/onboard"
+          body="A preview of Digital SAT habits. Mentoring continues on Digital SAT — never an AP subject upsell, and never a National Merit promise."
+          href="/method"
         />
         <IntentCard
           title="PSAT 10"
-          body="Shared instructional core with a distinct track. Same mastery rules; no National Merit counselling on this path."
-          href="/onboard"
+          body="Shared instructional core with a distinct track. Same two public lessons. Mentoring still goes to Digital SAT only."
+          href="/method"
         />
         <IntentCard
-          title="Diagnostic and adaptive mock"
-          body="A 28-item domain screening, then a shortened two-stage rehearsal that freezes an Anannt routing rule — not College Board’s threshold."
-          href="/method"
+          title="Digital SAT mentoring"
+          body="When you want a person in the room, continue on Digital SAT coaching in Dubai — not AP Calculus, Statistics, or Physics."
+          href={SAT_COACHING_URL}
         />
       </section>
 
@@ -88,33 +88,21 @@ export function HomeLanding() {
           Complete lessons you can open today
         </h2>
         <p className="max-w-2xl text-muted-foreground">
-          The map lists RW0–RW12 and M0–M14. Complete lessons carry the full Anannt method. Other units are walkable
-          shells — labelled so unknown skills stay unknown.
+          Two public lessons to start. Other map entries are gated so this stays a SAT feeder, not a fake complete
+          course.
         </p>
         <ul className="grid gap-3 sm:grid-cols-2">
           <SkillLink
-            href="/learn/M2/M2-L1"
+            href={PUBLIC_LESSON_1.path}
+            id="RW0"
+            title={PUBLIC_LESSON_1.title}
+            body="Claims versus examples, paraphrase, and how sentences connect — the SAT preview start."
+          />
+          <SkillLink
+            href={PUBLIC_LESSON_2.path}
             id="M2"
-            title="Slope in context"
-            body="C = 12 + 3d: 12 is the cost at 0 km, 3 is rupees per kilometre. The featured error is swapping rate and start."
-          />
-          <SkillLink
-            href="/learn/RW8/RW8-L1"
-            id="RW8"
-            title="Sentence boundaries"
-            body="Fused sentences, comma splices, fragments. Two complete ideas need a legal join — a comma alone is not one."
-          />
-          <SkillLink
-            href="/learn/RW1/RW1-L1"
-            id="RW1"
-            title="Central meaning and scope"
-            body="Keep some, may, and not studied. Inflating a cautious finding is the attractive wrong answer."
-          />
-          <SkillLink
-            href="/learn/M7/M7-L1"
-            id="M7"
-            title="Rates, units, percents"
-            body="Write the rate with units in both parts. Percent change uses the original amount as the base."
+            title={PUBLIC_LESSON_2.title}
+            body="C = 12 + 3d: 12 is the cost at 0 km, 3 is rupees per kilometre. Completing this lesson opens the mentor gate."
           />
         </ul>
         <Link
@@ -145,11 +133,18 @@ export function HomeLanding() {
 }
 
 function IntentCard({ title, body, href }: { title: string; body: string; href: string }) {
+  const className =
+    "rounded-xl border bg-card p-4 transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+  if (href.startsWith("http")) {
+    return (
+      <a href={href} className={className}>
+        <h3 className="font-medium">{title}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{body}</p>
+      </a>
+    )
+  }
   return (
-    <Link
-      href={href}
-      className="rounded-xl border bg-card p-4 transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
+    <Link href={href} className={className}>
       <h3 className="font-medium">{title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{body}</p>
     </Link>

@@ -13,7 +13,6 @@ import { CONTENT_REVIEW_DATE } from "@/lib/types"
 
 export default function HelpPage() {
   const { state, addBluebook, hydrated } = useStudent()
-  const nmsqt = state.profile?.track !== "psat-10"
   const [testName, setTestName] = useState("Bluebook full PSAT practice")
   const [total, setTotal] = useState("")
   const [notes, setNotes] = useState("")
@@ -25,9 +24,8 @@ export default function HelpPage() {
       <div>
         <h1 className="text-3xl font-semibold">Help</h1>
         <p className="mt-2 text-muted-foreground">
-          Accessibility, official Bluebook practice, test-day logistics, and careful National Merit context. Academic
-          facts last reviewed {CONTENT_REVIEW_DATE}. Check current College Board guides before every sitting. Anannt
-          Education authors this guidance; we are not affiliated with the College Board.
+          Accessibility, official Bluebook practice, and test-day logistics. Anannt does not counsel National Merit.
+          Academic facts last reviewed {CONTENT_REVIEW_DATE}. We are not affiliated with the College Board.
         </p>
       </div>
 
@@ -105,38 +103,15 @@ export default function HelpPage() {
       </section>
 
       <section id="nmsqt" className="space-y-3">
-        <h2 className="text-xl font-medium">National Merit information</h2>
-        {nmsqt ? (
-          <Alert>
-            <AlertTitle>NMSQT track only · dated {CONTENT_REVIEW_DATE}</AlertTitle>
-            <AlertDescription className="space-y-2">
-              <p>
-                National Merit scholarship programmes use PSAT/NMSQT as an entry vehicle. Eligibility involves more than
-                a practice score, particularly for students outside the United States. Completing Anannt lessons does not
-                make you a National Merit entrant, semi-finalist, or scholar.
-              </p>
-              <p>
-                We do not publish cutoffs, because they change by year and state, and because this product has no
-                validated score estimator. Read the current student guide and entry-year materials:
-              </p>
-              <p>
-                <a
-                  className="underline"
-                  href="https://satsuite.collegeboard.org/media/pdf/psat-nmsqt-student-guide.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  PSAT/NMSQT Student Guide (PDF)
-                </a>
-              </p>
-            </AlertDescription>
-          </Alert>
-        ) : (
-          <p className="text-sm text-muted-foreground">
-            You are on the PSAT 10 track. National Merit counselling is not shown here. Switch tracks in onboarding only
-            if you are actually sitting the NMSQT.
-          </p>
-        )}
+        <h2 className="text-xl font-medium">National Merit</h2>
+        <Alert>
+          <AlertTitle>Anannt does not counsel National Merit</AlertTitle>
+          <AlertDescription>
+            This path does not decide eligibility, publish cutoffs, or treat practice percent as an official
+            PSAT/NMSQT score. PSAT/NMSQT® is a registered trademark of the College Board and the National Merit
+            Scholarship Corporation, which are not affiliated with, and do not endorse, this website.
+          </AlertDescription>
+        </Alert>
       </section>
 
       <Accordion>

@@ -42,7 +42,7 @@ const NAV = [
   { href: "/help", label: "Help", icon: CircleHelp },
 ]
 
-const MARKETING = new Set(["/", "/method", "/for-families"])
+const MARKETING = new Set(["/", "/method", "/for-families", "/faq", "/privacy"])
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()

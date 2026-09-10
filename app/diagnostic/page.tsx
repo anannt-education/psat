@@ -14,6 +14,8 @@ import { diagnosticNextStep } from "@/lib/coach"
 import { BRAND } from "@/lib/brand"
 import { useStudent } from "@/lib/storage"
 import type { DomainId } from "@/lib/types"
+import { trackEvent } from "@/lib/events"
+import { continueOrStart } from "@/lib/gate-client"
 
 export default function DiagnosticPage() {
   const { completeDiagnostic, state, hydrated } = useStudent()
@@ -97,7 +99,10 @@ export default function DiagnosticPage() {
           There are no hints on this sitting so the sample stays independent. You will still see why an item was testing
           a skill after you submit. We will not turn this percent into a 320–1520.
         </MentorNote>
-        <Button size="lg" onClick={() => setIntro(false)}>
+        <Button size="lg" onClick={() => {
+          trackEvent("diagnostic_start")
+          setIntro(false)
+        }}>
           Begin the screening
         </Button>
       </div>
@@ -134,6 +139,7 @@ export default function DiagnosticPage() {
           if (idx + 1 < items.length) setAwaitingNext(true)
           else {
             completeDiagnostic(next, items.map((i) => i.id))
+            if (continueOrStart("diagnostic")) return
             setDone(true)
           }
         }}

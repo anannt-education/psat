@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/json-ld"
 import { lessonById } from "@/data/lessons"
 import { unitById } from "@/lib/curriculum"
 import { breadcrumbJsonLd, learningResourceJsonLd, pageMetadata } from "@/lib/seo"
+import { PUBLIC_SEO } from "@/lib/mount"
 
 type Props = { params: Promise<{ unitId: string; lessonId: string }> }
 
@@ -15,12 +16,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: "Lesson",
       description: "Anannt Education PSAT lesson on the published RW0–RW12 and M0–M14 path.",
       path: `/learn/${unitId}/${lessonId}`,
+      noIndex: true,
+    })
+  }
+  const publicCopy =
+    lessonId === "RW0-L1" ? PUBLIC_SEO.lesson1 : lessonId === "M2-L1" ? PUBLIC_SEO.lesson2 : null
+  if (publicCopy) {
+    return pageMetadata({
+      title: publicCopy.title,
+      description: publicCopy.description,
+      path: publicCopy.path,
     })
   }
   return pageMetadata({
     title: `${unit.id} · ${lesson.title}`,
     description: lesson.objective,
     path: `/learn/${unitId}/${lessonId}`,
+    noIndex: true,
   })
 }
 

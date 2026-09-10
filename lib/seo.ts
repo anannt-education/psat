@@ -1,13 +1,11 @@
 import type { Metadata } from "next"
 import { BRAND } from "@/lib/brand"
-import { LESSONS } from "@/data/lessons"
 import { UNITS } from "@/lib/curriculum"
-
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3847").replace(/\/$/, "")
+import { PUBLIC_LESSON_PATHS, SITE_URL, absUrl } from "@/lib/mount"
 
 export function absoluteUrl(path = "/") {
   if (path.startsWith("http")) return path
-  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`
+  return absUrl(path)
 }
 
 export function pageMetadata({
@@ -149,19 +147,16 @@ export function metadataForPath(path: string): Metadata {
 }
 
 export function sitemapEntries() {
-  const staticUrls = PUBLIC_PATHS.map((p) => ({
-    url: absoluteUrl(p.path),
-    lastModified: new Date(),
-    changeFrequency: p.path === "/" || p.path === "/learn" ? ("weekly" as const) : ("monthly" as const),
-    priority: p.path === "/" ? 1 : p.path === "/learn" || p.path === "/method" ? 0.8 : 0.6,
-  }))
-  const lessons = LESSONS.map((lesson) => ({
-    url: absoluteUrl(`/learn/${lesson.unitId}/${lesson.id}`),
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: lesson.complete ? 0.7 : 0.45,
-  }))
-  return [...staticUrls, ...lessons]
+  const now = new Date()
+  return [
+    { url: absUrl("/"), lastModified: now, changeFrequency: "weekly" as const, priority: 1 },
+    ...PUBLIC_LESSON_PATHS.map((path, i) => ({
+      url: absUrl(path),
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: i === 0 ? 0.9 : 0.8,
+    })),
+  ]
 }
 
 export function organizationJsonLd() {
@@ -171,7 +166,7 @@ export function organizationJsonLd() {
     name: BRAND.name,
     alternateName: BRAND.shortName,
     description: BRAND.description,
-    url: SITE_URL,
+    url: absUrl("/"),
     slogan: BRAND.tagline,
     knowsAbout: ["PSAT/NMSQT", "PSAT 10", "SAT Suite", "Reading and Writing", "High school mathematics"],
   }
@@ -183,11 +178,11 @@ export function courseJsonLd() {
     "@type": "Course",
     name: BRAND.product,
     description: BRAND.description,
-    url: SITE_URL,
+    url: absUrl("/"),
     provider: {
       "@type": "EducationalOrganization",
       name: BRAND.name,
-      url: SITE_URL,
+      url: absUrl("/"),
     },
     educationalLevel: "High school",
     teaches: "PSAT/NMSQT and PSAT 10 Reading and Writing and Math",

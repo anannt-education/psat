@@ -4,11 +4,11 @@ import { useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { useStudent } from "@/lib/storage"
 
-const OPEN_EXACT = new Set(["/", "/onboard", "/method", "/for-families", "/help", "/learn"])
+const OPEN_EXACT = new Set(["/", "/method", "/for-families", "/faq", "/privacy", "/diagnostic", "/learn"])
 
 function isOpen(pathname: string) {
   if (OPEN_EXACT.has(pathname)) return true
-  if (pathname.startsWith("/learn/")) return true
+  if (pathname === "/learn/RW0/RW0-L1" || pathname === "/learn/M2/M2-L1") return true
   return false
 }
 
@@ -21,7 +21,6 @@ export function useJourneyGate() {
     if (!hydrated) return
     if (isOpen(pathname)) return
     if (!state.profile) {
-      router.replace("/onboard")
       return
     }
     if (!state.orientationComplete && pathname !== "/orient") {
