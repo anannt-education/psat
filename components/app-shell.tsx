@@ -42,7 +42,13 @@ const NAV = [
   { href: "/help", label: "Help", icon: CircleHelp },
 ]
 
-const MARKETING = new Set(["/", "/method", "/for-families"])
+const MARKETING = new Set(["/", "/method", "/for-families", "/help", "/learn", "/diagnostic"])
+
+function isMarketingPath(pathname: string) {
+  if (MARKETING.has(pathname)) return true
+  if (pathname.startsWith("/learn/M2/") || pathname.startsWith("/learn/RW1/")) return true
+  return false
+}
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -51,7 +57,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const ready = hydrated
   const showNav = ready && Boolean(state.profile)
-  const isMarketing = MARKETING.has(pathname)
+  const isMarketing = isMarketingPath(pathname)
 
   const links = useMemo(() => {
     const extra =
@@ -114,8 +120,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 [
                   { href: "/method", label: "How we teach" },
                   { href: "/for-families", label: "For families" },
-                  { href: "/learn", label: "Curriculum map" },
-                  { href: "/onboard", label: "Start the path" },
+                  { href: "/learn/M2/M2-L1", label: "Lesson 1 · slope" },
+                  { href: "/learn/RW1/RW1-L1", label: "Lesson 2 · some vs all" },
                 ].map((item) => (
                   <Link
                     key={item.href}

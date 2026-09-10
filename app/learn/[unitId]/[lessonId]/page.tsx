@@ -16,6 +16,8 @@ import { Breadcrumbs } from "@/components/breadcrumbs"
 import { MentorNote } from "@/components/mentor-note"
 import { BRAND } from "@/lib/brand"
 import { emptyState } from "@/lib/coach"
+import { isLesson2, PUBLIC_LESSONS } from "@/lib/mount"
+import { redirectToGate } from "@/lib/gate-client"
 
 const STEPS = [
   "Objective",
@@ -67,7 +69,12 @@ export default function LessonPage({
     const n = Math.max(0, Math.min(totalSteps - 1, next))
     setStep(n)
     saveLessonProgress(lessonId, n, n === totalSteps - 1)
-    if (n === totalSteps - 1) completeTask(`task-lesson-${unitId}`)
+    if (n === totalSteps - 1) {
+      completeTask(`task-lesson-${unitId}`)
+      if (isLesson2(lessonId)) {
+        redirectToGate(PUBLIC_LESSONS[1].unit)
+      }
+    }
   }
 
   return (
@@ -188,9 +195,22 @@ export default function LessonPage({
         <Button variant="outline" onClick={() => go(step - 1)} disabled={step === 0}>
           Back
         </Button>
-        <Button onClick={() => go(step + 1)} disabled={step === totalSteps - 1}>
-          Continue
-        </Button>
+          <Button
+            onClick={() => {
+              if (step === totalSteps - 2 && isLesson2(lessonId)) {
+                go(step + 1)
+                return
+              }
+              if (step === totalSteps - 1 && isLesson2(lessonId)) {
+                redirectToGate(PUBLIC_LESSONS[1].unit)
+                return
+              }
+              go(step + 1)
+            }}
+            disabled={step === totalSteps - 1 && !isLesson2(lessonId)}
+          >
+            {step === totalSteps - 1 && isLesson2(lessonId) ? "Finish lesson 2" : "Continue"}
+          </Button>
       </div>
     </div>
   )

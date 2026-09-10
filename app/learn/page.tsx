@@ -2,79 +2,71 @@
 
 import Link from "next/link"
 import { UNITS } from "@/lib/curriculum"
-import { useStudent } from "@/lib/storage"
-import { MasteryChip } from "@/components/mastery-chip"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { emptyMastery, ensureMasteryMap } from "@/lib/mastery"
 import { MentorNote } from "@/components/mentor-note"
 import { BRAND } from "@/lib/brand"
-import { LESSONS } from "@/data/lessons"
+import { PUBLIC_LESSONS, waitlistHref } from "@/lib/mount"
 
 export default function LearnPage() {
-  const { state, hydrated } = useStudent()
-  if (!hydrated) return <p className="text-muted-foreground">Loading the unit path…</p>
-  const mastery = ensureMasteryMap(state.mastery)
   const rw = UNITS.filter((u) => u.section === "rw")
   const math = UNITS.filter((u) => u.section === "math")
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold">Curriculum map</h1>
+        <h1 className="text-3xl font-semibold">PSAT map — two public lessons</h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">
-          {BRAND.name} sequences Reading and Writing RW0–RW12 and Math M0–M14. You may open any lesson. Complete lessons
-          carry the full method (objective through takeaway). Walkable shells are labelled so untested skills stay
-          unknown — not dressed up as mastered.
+          {BRAND.name} opens slope in context and some versus all with no account. Later units stay
+          unpublished. This is a SAT feeder, not an AP package.
         </p>
       </div>
       <MentorNote>
-        If you are new to the path, start with a complete lesson: RW1 (some versus all), RW8 (sentence boundaries), or M2
-        (slope as rate versus start). Challenge checks can skip a recommendation; a failed check yields a short repair,
-        not a full-course restart.
+        Start with M2 (slope as rate versus start), then RW1 (some versus all). After lesson 2 we
+        send you to study.anannt.ae/start.
       </MentorNote>
-      <Section title="Reading and Writing" units={rw} mastery={mastery} />
-      <Section title="Math" units={math} mastery={mastery} />
+      <Section title="Reading and Writing" units={rw} />
+      <Section title="Math" units={math} />
     </div>
   )
 }
 
-function Section({
-  title,
-  units,
-  mastery,
-}: {
-  title: string
-  units: typeof UNITS
-  mastery: ReturnType<typeof ensureMasteryMap>
-}) {
+function Section({ title, units }: { title: string; units: typeof UNITS }) {
   return (
     <section>
       <h2 className="mb-3 text-xl font-medium">{title}</h2>
       <div className="grid gap-3 sm:grid-cols-2">
         {units.map((u) => {
-          const rec = mastery[`${u.id}-S1`] ?? emptyMastery(`${u.id}-S1`)
-          const lesson = LESSONS.find((l) => l.unitId === u.id)
-          return (
-            <Link key={u.id} href={`/learn/${u.id}/${u.lessonIds[0]}`}>
+          const publicLesson = PUBLIC_LESSONS.find((l) => l.unitId === u.id)
+          return publicLesson ? (
+            <Link key={u.id} href={publicLesson.path}>
               <Card className="h-full transition-colors hover:bg-muted/40">
                 <CardHeader className="flex flex-row items-start justify-between gap-2">
                   <CardTitle className="text-base">
                     {u.id} · {u.title}
                   </CardTitle>
-                  <MasteryChip state={rec.state} />
+                  <Badge>Public lesson</Badge>
                 </CardHeader>
-                <CardContent className="space-y-2 text-sm text-muted-foreground">
-                  <p>{u.coverage}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {lesson?.complete ? <Badge>Complete lesson</Badge> : <Badge variant="secondary">Walkable shell</Badge>}
-                    {u.prerequisites.length > 0 && (
-                      <Badge variant="outline">After {u.prerequisites.join(", ")}</Badge>
-                    )}
-                  </div>
+                <CardContent className="text-sm text-muted-foreground">
+                  <p>{publicLesson.title}. Open with no account.</p>
                 </CardContent>
               </Card>
             </Link>
+          ) : (
+            <Card key={u.id} className="h-full">
+              <CardHeader className="flex flex-row items-start justify-between gap-2">
+                <CardTitle className="text-base">
+                  {u.id} · {u.title}
+                </CardTitle>
+                <Badge variant="secondary">Unpublished</Badge>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground">
+                <p>Not a hidden course. Ask to be told when this lesson is ready.</p>
+                <a className="mt-2 inline-block underline" href={waitlistHref(u.id)}>
+                  Waitlist this unit
+                </a>
+              </CardContent>
+            </Card>
           )
         })}
       </div>

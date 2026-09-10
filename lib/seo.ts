@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
 import { BRAND } from "@/lib/brand"
-import { LESSONS } from "@/data/lessons"
 import { UNITS } from "@/lib/curriculum"
+import { SITE_URL as MOUNT_SITE_URL, absUrl } from "@/lib/mount"
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3847").replace(/\/$/, "")
+export const SITE_URL = MOUNT_SITE_URL
 
 export function absoluteUrl(path = "/") {
   if (path.startsWith("http")) return path
-  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`
+  return absUrl(path)
 }
 
 export function pageMetadata({
@@ -45,94 +45,54 @@ export function pageMetadata({
   }
 }
 
-export const PUBLIC_PATHS: { path: string; title: string; description: string }[] = [
+export const PUBLIC_PATHS: { path: string; title: string; description: string; noIndex?: boolean }[] = [
   {
     path: "/",
-    title: "PSAT/NMSQT and PSAT 10 path",
-    description: BRAND.description,
+    title: "PSAT/NMSQT path — SAT feeder, two open lessons",
+    description:
+      "A short SAT-feeder path: slope in context and some versus all. Two lessons open, no account. Digital SAT mentoring in Dubai if you want a person.",
   },
   {
     path: "/method",
-    title: "How Anannt Education teaches PSAT",
+    title: "How this PSAT desk teaches SAT habits",
     description:
-      "Anannt Education’s method for PSAT/NMSQT and PSAT 10: orient, diagnose, place, plan, learn, apply, retain, perform. No score guarantees and no College Board affiliation.",
+      "Orient, try two public lessons, then a Digital SAT mentor if you want a person. This path does not sell AP packages and does not promise scholarships.",
   },
   {
     path: "/for-families",
-    title: "PSAT prep for families",
+    title: "PSAT desk notes for families",
     description:
-      "How families can support Anannt Education’s PSAT/NMSQT and PSAT 10 path: protect study days, ask for one worked example, and never treat practice percent as an official score.",
-  },
-  {
-    path: "/onboard",
-    title: "Set up your PSAT path",
-    description:
-      "Choose PSAT/NMSQT or PSAT 10, grade, weekly minutes, and what you want help with. Anannt Education stores this setup on this device only.",
-  },
-  {
-    path: "/orient",
-    title: "How the PSAT suite and this course work",
-    description:
-      "Official PSAT/NMSQT and PSAT 10 structure, two-stage modules, and Anannt Education’s ten-step learning journey.",
-  },
-  {
-    path: "/diagnostic",
-    title: "PSAT domain screening",
-    description:
-      "A 28-item Anannt Education diagnostic across eight official PSAT domains. Placement hints with uncertainty — not an official 320–1520 score.",
-  },
-  {
-    path: "/today",
-    title: "Today’s PSAT plan",
-    description: "A dated Anannt Education study plan for PSAT/NMSQT or PSAT 10, with a reason and duration for each task.",
+      "Protect a quiet hour. Ask for one worked example on slope or some-versus-all. This is SAT preview, not an AP package, and not a scholarship promise.",
   },
   {
     path: "/learn",
-    title: "PSAT curriculum map",
+    title: "PSAT map — two public lessons, rest unpublished",
     description:
-      "Anannt Education’s sequential PSAT path: Reading and Writing RW0–RW12 and Math M0–M14, including slope in context and sentence boundaries.",
+      "Open slope in context and some versus all with no account. Later units stay unpublished. SAT feeder only — Digital SAT mentoring if you want a person.",
   },
   {
-    path: "/practice",
-    title: "PSAT practice modes",
+    path: "/learn/M2/M2-L1",
+    title: "Slope in context — public PSAT lesson",
     description:
-      "Guided hints, independent quizzes, mixed review, timed mini-sets, and section modules written by Anannt Education for the digital PSAT suite.",
+      "Rate versus starting value in a linear story. First public PSAT lesson, no account. A SAT-feeder habit, not an AP upsell and not a scholarship claim.",
   },
   {
-    path: "/mistakes",
-    title: "Review PSAT mistakes",
+    path: "/learn/RW1/RW1-L1",
+    title: "Some versus all — public PSAT lesson",
     description:
-      "Anannt Education’s error notebook: knowledge, interpretation, method, calculation, and timing — then a fresh analogous item.",
+      "Keep the author’s limits: some, may, not studied. Second public PSAT lesson, no account. SAT feeder path toward Digital SAT mentoring if you want help.",
   },
   {
-    path: "/mocks",
-    title: "PSAT two-stage mock rehearsal",
+    path: "/diagnostic",
+    title: "PSAT diagnostic start — SAT feeder screening",
     description:
-      "Shortened two-stage PSAT/NMSQT rehearsal with an Anannt routing rule. Raw accuracy and pacing — never a converted official score.",
-  },
-  {
-    path: "/progress",
-    title: "PSAT learning evidence",
-    description:
-      "Coverage, independent accuracy, retention, and timed performance stored separately by Anannt Education. No opaque composite score.",
+      "Start a short domain screening with no account. Submit sends you to study.anannt.ae/start. Placement hints only — not an official score.",
   },
   {
     path: "/help",
-    title: "Help, Bluebook, and test day",
+    title: "PSAT help and Digital SAT mentoring",
     description:
-      "Accessibility, outbound College Board Bluebook practice, test-day checklist, and careful National Merit context from Anannt Education.",
-  },
-  {
-    path: "/parent",
-    title: "Family summary",
-    description:
-      "Effort and learning evidence for the student on this device. Anannt Education does not stream failure alerts to families.",
-  },
-  {
-    path: "/mentor",
-    title: "Mentor exception queue",
-    description:
-      "Anannt Education’s mentor view: inactivity, repeated errors, and timed-versus-untimed gaps — with inspectable reasons.",
+      "Accessibility, outbound College Board practice, and Digital SAT mentoring in Dubai. This path does not sell AP packages and does not promise scholarships.",
   },
 ]
 
@@ -149,19 +109,12 @@ export function metadataForPath(path: string): Metadata {
 }
 
 export function sitemapEntries() {
-  const staticUrls = PUBLIC_PATHS.map((p) => ({
+  return PUBLIC_PATHS.filter((p) => !p.noIndex).map((p) => ({
     url: absoluteUrl(p.path),
     lastModified: new Date(),
     changeFrequency: p.path === "/" || p.path === "/learn" ? ("weekly" as const) : ("monthly" as const),
-    priority: p.path === "/" ? 1 : p.path === "/learn" || p.path === "/method" ? 0.8 : 0.6,
+    priority: p.path === "/" ? 1 : p.path.startsWith("/learn/") ? 0.8 : 0.6,
   }))
-  const lessons = LESSONS.map((lesson) => ({
-    url: absoluteUrl(`/learn/${lesson.unitId}/${lesson.id}`),
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: lesson.complete ? 0.7 : 0.45,
-  }))
-  return [...staticUrls, ...lessons]
 }
 
 export function organizationJsonLd() {

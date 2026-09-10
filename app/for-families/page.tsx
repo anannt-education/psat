@@ -59,8 +59,8 @@ export default function ForFamiliesPage() {
             <CardTitle>PSAT/NMSQT versus PSAT 10</CardTitle>
           </CardHeader>
           <CardContent className="text-sm leading-relaxed text-muted-foreground">
-            Instruction is shared. National Merit context appears only on the NMSQT track, as official links with no
-            eligibility guarantee. Completing Anannt lessons does not make anyone a semifinalist.
+            Instruction is shared. This path does not promise scholarships. Completing Anannt lessons does not award an
+            official standing.
           </CardContent>
         </Card>
         <Card>

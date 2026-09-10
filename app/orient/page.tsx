@@ -92,9 +92,9 @@ export default function OrientPage() {
           <CardTitle>What this product will not do</CardTitle>
         </CardHeader>
         <CardContent className="text-sm leading-relaxed text-muted-foreground">
-          It does not deliver the official exam, guarantee a score or scholarship, decide National Merit eligibility,
-          offer live classes, or rank students publicly. It does not invent a 320–1520 from a percent correct. Official
-          Bluebook practice is an outbound task; Anannt never collects College Board credentials.
+          It does not deliver the official exam, guarantee a score or scholarship, offer live classes, or rank students
+          publicly. It does not invent a 320–1520 from a percent correct. Official College Board practice is an outbound
+          task; Anannt never collects College Board credentials.
         </CardContent>
       </Card>
 
