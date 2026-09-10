@@ -5,14 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { JsonLd } from "@/components/json-ld"
 import { MentorNote } from "@/components/mentor-note"
 import { BRAND } from "@/lib/brand"
-import { organizationJsonLd, pageMetadata } from "@/lib/seo"
+import { organizationJsonLd, metadataForPath } from "@/lib/seo"
 
-export const metadata: Metadata = pageMetadata({
-  title: "PSAT prep for families",
-  description:
-    "How families can support Anannt Education’s PSAT/NMSQT and PSAT 10 path: protect study days, ask for one worked example, and never treat practice percent as an official score.",
-  path: "/for-families",
-})
+export const metadata: Metadata = metadataForPath("/for-families")
 
 export default function ForFamiliesPage() {
   return (

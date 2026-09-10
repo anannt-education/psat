@@ -50,7 +50,7 @@ export const PUBLIC_PATHS: { path: string; title: string; description: string; n
     path: "/",
     title: "PSAT/NMSQT path — SAT feeder, two open lessons",
     description:
-      "A short SAT-feeder path: slope in context and some versus all. Two lessons open, no account. Digital SAT mentoring in Dubai if you want a person.",
+      "A short SAT-feeder path: slope in context and some versus all. Two lessons open, no account. Digital SAT mentoring in Dubai if you want a person today.",
   },
   {
     path: "/method",
@@ -62,7 +62,7 @@ export const PUBLIC_PATHS: { path: string; title: string; description: string; n
     path: "/for-families",
     title: "PSAT desk notes for families",
     description:
-      "Protect a quiet hour. Ask for one worked example on slope or some-versus-all. This is SAT preview, not an AP package, and not a scholarship promise.",
+      "Protect a quiet hour. Ask for one worked example on slope or some-versus-all. This is SAT preview, not an AP package, and not a scholarship promise here.",
   },
   {
     path: "/learn",
@@ -74,19 +74,19 @@ export const PUBLIC_PATHS: { path: string; title: string; description: string; n
     path: "/learn/M2/M2-L1",
     title: "Slope in context — public PSAT lesson",
     description:
-      "Rate versus starting value in a linear story. First public PSAT lesson, no account. A SAT-feeder habit, not an AP upsell and not a scholarship claim.",
+      "Rate versus starting value in a linear story. First public PSAT lesson, no account. A SAT-feeder habit, not an AP upsell and not a scholarship promise.",
   },
   {
     path: "/learn/RW1/RW1-L1",
     title: "Some versus all — public PSAT lesson",
     description:
-      "Keep the author’s limits: some, may, not studied. Second public PSAT lesson, no account. SAT feeder path toward Digital SAT mentoring if you want help.",
+      "Keep the author’s limits: some, may, not studied. Second public PSAT lesson, no account. SAT feeder toward Digital SAT mentoring if you want a person.",
   },
   {
     path: "/diagnostic",
     title: "PSAT diagnostic start — SAT feeder screening",
     description:
-      "Start a short domain screening with no account. Submit sends you to study.anannt.ae/start. Placement hints only — not an official score.",
+      "Start a short domain screening with no account. Submit sends you to study.anannt.ae/start. Placement hints only — not an official PSAT or SAT score here.",
   },
   {
     path: "/help",

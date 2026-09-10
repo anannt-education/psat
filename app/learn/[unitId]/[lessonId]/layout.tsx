@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { JsonLd } from "@/components/json-ld"
 import { lessonById } from "@/data/lessons"
 import { unitById } from "@/lib/curriculum"
-import { breadcrumbJsonLd, learningResourceJsonLd, pageMetadata } from "@/lib/seo"
+import { breadcrumbJsonLd, learningResourceJsonLd, pageMetadata, PUBLIC_PATHS } from "@/lib/seo"
 import { PUBLIC_LESSON_IDS } from "@/lib/mount"
 
 type Props = { params: Promise<{ unitId: string; lessonId: string }> }
@@ -19,11 +19,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       noIndex: true,
     })
   }
+  const publicPath = `/learn/${unitId}/${lessonId}`
+  const publicSeo = PUBLIC_PATHS.find((p) => p.path === publicPath)
   const isPublic = PUBLIC_LESSON_IDS.has(lessonId)
   return pageMetadata({
-    title: `${unit.id} · ${lesson.title}`,
-    description: lesson.objective,
-    path: `/learn/${unitId}/${lessonId}`,
+    title: publicSeo?.title ?? `${unit.id} · ${lesson.title}`,
+    description: publicSeo?.description ?? lesson.objective,
+    path: publicPath,
     noIndex: !isPublic,
   })
 }

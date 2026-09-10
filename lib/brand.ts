@@ -6,7 +6,7 @@ export const BRAND = {
   mentor: "Your Anannt mentor",
   tagline: "Understand what you are learning, know what to do next, and practise until you can apply it independently.",
   description:
-    "A short SAT-feeder path: slope in context and some versus all. Two lessons open, no account. Digital SAT mentoring in Dubai if you want a person.",
+    "A short SAT-feeder path: slope in context and some versus all. Two lessons open, no account. Digital SAT mentoring in Dubai if you want a person today.",
   disclaimer:
     "Anannt Education is not affiliated with the College Board. This path does not deliver the official exam, convert practice into official scores, or promise scholarships.",
 } as const
