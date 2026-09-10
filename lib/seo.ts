@@ -81,7 +81,7 @@ export const PUBLIC_PATHS: { path: string; title: string; description: string; i
     path: "/diagnostic",
     title: "PSAT domain screening start",
     description:
-      "Start a short PSAT domain screening with no account. After you submit, we point only to Digital SAT mentoring in Dubai — never an AP course.",
+      "Start a short PSAT domain screening with no account. After you submit, we point only to Digital SAT mentoring at Anannt in Dubai — never an AP course.",
   },
   {
     path: "/today",
