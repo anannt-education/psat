@@ -15,7 +15,7 @@ export default function LearnPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold">PSAT map — two public lessons</h1>
+        <h1 className="text-3xl font-semibold">PSAT map — slope, then some versus all</h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">
           {BRAND.name} opens slope in context and some versus all with no account. Later units stay
           unpublished. This is a SAT feeder, not an AP package.
