@@ -48,9 +48,9 @@ export function pageMetadata({
 export const PUBLIC_PATHS: { path: string; title: string; description: string; noIndex?: boolean }[] = [
   {
     path: "/",
-    title: "PSAT/NMSQT path — SAT feeder, two open lessons",
+    title: "PSAT/NMSQT path — SAT feeder",
     description:
-      "A short SAT-feeder path: slope in context and some versus all. Two lessons open, no account. Digital SAT mentoring in Dubai if you want a person today.",
+      "A short SAT-feeder path: slope in context and some versus all. No account to begin. Digital SAT mentoring in Dubai if you want a person today.",
   },
   {
     path: "/method",
@@ -66,7 +66,7 @@ export const PUBLIC_PATHS: { path: string; title: string; description: string; n
   },
   {
     path: "/learn",
-    title: "PSAT map — two public lessons, rest unpublished",
+    title: "PSAT map — slope, then some versus all",
     description:
       "Open slope in context and some versus all with no account. Later units stay unpublished. SAT feeder only — Digital SAT mentoring if you want a person.",
   },

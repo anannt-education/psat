@@ -12,11 +12,10 @@ export function HomeLanding() {
           Self-prep studio · SAT feeder · PSAT/NMSQT
         </p>
         <h1 className="max-w-3xl font-heading text-4xl font-semibold tracking-tight md:text-5xl">
-          Two lessons toward Digital SAT habits — not an AP package.
+          A short path into Digital SAT habits — not an AP package.
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          {BRAND.tagline} Open slope in context, then some versus all. No account. After lesson 2 we
-          ask for email and a parent WhatsApp on study.anannt.ae. If you want a person later, that
+          {BRAND.tagline} Open slope in context, then some versus all. No account to begin. If you want a person later, that
           person is Digital SAT mentoring — never an AP upsell.
         </p>
         <ContinueToPath />
@@ -24,7 +23,7 @@ export function HomeLanding() {
 
       <section aria-labelledby="public-lessons" className="grid gap-4 md:grid-cols-2">
         <h2 id="public-lessons" className="sr-only">
-          Two public lessons
+          Two lessons
         </h2>
         {PUBLIC_LESSONS.map((lesson, i) => (
           <Link
@@ -33,7 +32,7 @@ export function HomeLanding() {
             className="rounded-xl border bg-card p-5 transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Public lesson {i + 1} · {lesson.id}
+              Lesson {i + 1} · {lesson.id}
             </p>
             <h3 className="mt-1 font-medium">{lesson.title}</h3>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -47,7 +46,7 @@ export function HomeLanding() {
 
       <section aria-labelledby="sat-cta" className="rounded-xl border bg-card p-6">
         <h2 id="sat-cta" className="font-heading text-xl font-semibold">
-          If you want a person after two honest lessons
+          If you want a person later
         </h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           This path feeds Digital SAT work. We do not send PSAT students to AP packages.
